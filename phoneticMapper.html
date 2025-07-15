@@ -1,0 +1,48 @@
+<input type="file" id="fileInput" accept=".txt,.csv" />
+<pre id="output"></pre>
+<script>
+/**
+ * 將表格文字轉為反向 map，value 為陣列
+ * @param {string} text 檔案內容
+ * @returns {Object} 反向查詢物件
+ */
+function parsePhoneticDictionary(text) {
+  const map = {};
+  text.split(/\r?\n/).forEach(line => {
+    // 排除空行和格式錯誤
+    if (!line.trim()) return;
+    const [code, , chars] = line.split(',');
+    if (!code || !chars) return;
+    for (const char of chars.trim()) {
+      if (!map[char]) map[char] = [];
+      map[char].push(code.trim());
+    }
+  });
+  return map;
+}
+
+/**
+ * 處理檔案上傳與顯示
+ */
+function handleFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const text = e.target.result;
+      const charToPhonetic = parsePhoneticDictionary(text);
+      // 美化輸出
+      document.getElementById('output').textContent =
+        JSON.stringify(charToPhonetic, null, 2);
+    } catch (err) {
+      document.getElementById('output').textContent = '檔案格式錯誤或解析失敗';
+    }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+// 綁定事件
+document.getElementById('fileInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (file) handleFile(file);
+});
+</script>
