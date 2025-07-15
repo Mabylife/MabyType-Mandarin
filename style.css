@@ -44,7 +44,7 @@ body {
   cursor: default;
 }
 
-.mainTextCon {
+.mainTextCon, .mandarinInput {
   align-self: self-start;
   position: absolute;
   left: 50%;
@@ -519,13 +519,9 @@ button::after {
 }
 
 .mandarinInput {
-  width: 176px;
-  height: 55px;
-  flex-shrink: 0;
-  position: absolute;
-  border-radius: 15px;
-  top: calc(50% + 60px);
-  right: 50%;
-  transform: translate(50%, 0%);
-  z-index: 10;
+  background-color: black;
+  bottom: 450px;
+  text-align: start;
+  width: 100%;
+  overflow: hidden;
 }

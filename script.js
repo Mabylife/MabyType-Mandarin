@@ -22,7 +22,7 @@ function checkAnswer() {
       const inputPhonetics = char2phonetic[input.value.charAt(i)] || [];
       const textPhonetics = char2phonetic[spans[i].textContent] || [];
       if (inputPhonetics.some((p) => textPhonetics.includes(p))) {
-        spans[i].style.color = "green";
+        spans[i].classList.add("correct");
         if (inputValue.charAt(i) !== spans[i].textContent) {
           input.value =
             inputValue.slice(0, i) +
@@ -30,9 +30,9 @@ function checkAnswer() {
             inputValue.slice(i + 1); // 超級宇宙炸裂貼心之幫你選字之術
         }
       } else if (inputValue.charAt(i) === "") {
-        spans[i].style.color = "black";
+        spans[i].classList.remove("correct", "incorrect");
       } else {
-        spans[i].style.color = "red";
+        spans[i].classList.add("incorrect");
       }
     }
   }
