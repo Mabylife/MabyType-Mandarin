@@ -9,6 +9,11 @@ let textIndex = 5; // 預設顯示 5 個 quote
 let how2Finish = ["onTime", 10]; // 預設 10 秒後結束
 let isStarted = false;
 let isFinished = false;
+// window.changeMode = changeMode;
+// window.replay = replay;
+window.next = next;
+// window.toggleVolumn = toggleVolumn;
+// window.toggleHud = toggleHud;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,11 +47,11 @@ function checkAnswer() {
         spans[i].classList.add("incorrect");
       }
     }
-    input.blur(); // 超級宇宙炸裂貼心之幫你消除底線之術步驟一
-    setTimeout(() => {
-      input.focus();
-      input.addEventListener("input", checkAnswer);
-    }, 0); // 超級宇宙炸裂貼心之幫你消除底線之術步驟二
+    const typedChar = document.querySelectorAll(".correct, .incorrect").length;
+    if (typedChar > spans.length * 0.6) {
+      addText();
+    }
+    removeUnderline();
   }
   scrollTheWholeShit();
 }
@@ -62,7 +67,7 @@ function addText() {
       text.innerHTML += wrapped;
     }
   }
-  const width = text.clientWidth || 0;
+  const width = text.offsetWidth;
   input.style.width = width + "px";
 }
 
@@ -83,25 +88,36 @@ function start() {
   }
 }
 
+let timerId = null; // 全域變數保存 requestAnimationFrame id
+
 function startSecondsTimer(s, callback) {
-  const start = performance.now();
+  const startTime = performance.now();
   function check() {
     const now = performance.now();
-    if (now - start >= s * 1000) {
-      console.log(`Total time: ${(now - start) / 1000} seconds`);
+    console.log(`Time elapsed: ${(now - startTime) / 1000} seconds`);
+    if (now - startTime >= s * 1000) {
+      console.log(`Total time: ${(now - startTime) / 1000} seconds`);
       callback();
+      timerId = null;
     } else {
-      requestAnimationFrame(check);
+      timerId = requestAnimationFrame(check);
     }
   }
   check();
+}
+
+// 手動停止計時器
+function stopSecondsTimer() {
+  if (timerId !== null) {
+    cancelAnimationFrame(timerId);
+    timerId = null;
+  }
 }
 
 function finish() {
   isFinished = true;
   console.log("Finish");
   input.blur();
-  input.style.userSelect = "none";
   input.removeEventListener("input", checkAnswer);
   deleteNoneMandarinChars();
 }
@@ -122,15 +138,45 @@ input.addEventListener("focus", () => {
 });
 
 function startNewGameReset() {
+  input.addEventListener("input", checkAnswer);
+  stopSecondsTimer(); // 停止計時器
+  isStarted = false;
+  isFinished = false;
+  text.innerHTML = ""; // 清空文字
+  input.focus();
   input.value = "";
   addText();
   input.style.width = "100%";
   input.style.transform = "translateX(0)";
   text.style.transform = "translateX(0)";
-  isStarted = false;
-  isFinished = false;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   startNewGameReset();
 });
+
+function next() {
+  setTimeout(() => {
+    nextBut.classList.remove("active");
+  }, 300);
+  nextBut.classList.add("active");
+  startNewGameReset();
+}
+
+document.addEventListener("keydown", (e) => {
+  switch (e.key) {
+    case "Tab":
+      e.preventDefault(); // 阻止 Tab 鍵的預設行為
+      next();
+      break;
+  }
+});
+
+function removeUnderline() {
+  input.blur(); // 超級宇宙炸裂貼心之幫你消除底線之術步驟一
+  setTimeout(() => {
+    input.focus();
+    input.addEventListener("input", checkAnswer);
+  }, 0); // 超級宇宙炸裂貼心之幫你消除底線之術步驟二
+}
+
