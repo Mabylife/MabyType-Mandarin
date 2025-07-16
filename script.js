@@ -188,7 +188,7 @@ function getResult() {
   const correctChars = document.querySelectorAll(".correct");
   const totalChars = incorrectChars.length + correctChars.length;
   const accuracy = (correctChars.length / totalChars) * 100;
-  const wpm = (totalChars / totalUsedTime) * 60; // 每分鐘打字數
+  const wpm = Math.round((totalChars / totalUsedTime) * 60); // 每分鐘打字數，四捨五入到整數
   console.log(`總字數: ${totalChars}`);
   console.log(`正確字數: ${correctChars.length}`);
   console.log(`錯誤字數: ${incorrectChars.length}`);
@@ -196,5 +196,5 @@ function getResult() {
   if (how2Finish[0] === "onTime") {
     console.log(`用時: ${how2Finish[1]} 秒`);
   }
-  console.log(`每分鐘打字數: ${wpm.toFixed(2)}`);
+  console.log(`每分鐘打字數: ${wpm}`);
 }
