@@ -522,6 +522,6 @@ button::after {
   background-color: black;
   bottom: 450px;
   text-align: start;
-  width: 100%;
   overflow: hidden;
+  text-wrap: nowrap;
 }

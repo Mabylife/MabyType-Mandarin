@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Maby Typing</title>
-    <meta name="description" content="MabyType, a simple typing test game to improve your typing speed and accuracy." />
-    <meta name="keywords" content="typing, typing test, typing game, speed typing, accuracy typing, typing prectice" />
+    <meta
+      name="description"
+      content="MabyType, a simple typing test game to improve your typing speed and accuracy."
+    />
+    <meta
+      name="keywords"
+      content="typing, typing test, typing game, speed typing, accuracy typing, typing prectice"
+    />
     <meta name="author" content="Mabylife" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon shortcut" href="favicon.ico" />
@@ -14,6 +20,7 @@
     <div class="container">
       <h1 class="wordmark">mabytype</h1>
       <p class="mainTextCon" id="text"></p>
+
       <div class="butCon">
         <button class="modeBut fake3d" id="modeBut" onclick="changeMode()">
           10 Words
@@ -27,6 +34,8 @@
       </div>
     </div>
 
+    <input type="text" class="mandarinInput" id="input" autocomplete="off" />
+
     <div class="line"></div>
 
     <div class="unfocused" id="unfocused">
@@ -37,30 +46,8 @@
     </div>
 
     <div class="loadingScreen">
-      <img src="icons/MABYTYPE.svg" alt="">
-      <img class="spinner" src="icons/spinner.svg" alt="">
-    </div>
-
-    <div class="resultCon" id="resultCon">
-      <div class="resultConLeft">
-        <p class="wpmText" id="wpmText">WPM</p>
-        <p class="wpmValue" id="wpmValue">48/60</p>
-        <p class="grossText" id="grossText">Net / Gross</p>
-      </div>
-      <div class="resultConRight">
-        <div class="cpmCon">
-          <p class="cpmText" id="cpmText">CPM</p>
-          <p class="cpmValue" id="cpmValue">315 / 400</p>
-        </div>
-        <div class="accCon">
-          <p class="accText" id="accText">ACC</p>
-          <p class="accValue" id="accValue">71.6 %</p>
-        </div>
-        <div class="timeCon">
-          <p class="timeText" id="timeText">TIME</p>
-          <p class="timeValue" id="timeValue">24.44 s</p>
-        </div>
-      </div>
+      <img src="icons/MABYTYPE.svg" alt="" />
+      <img class="spinner" src="icons/spinner.svg" alt="" />
     </div>
 
     <p class="hudTimer hud" id="hudTimer">0s</p>
@@ -70,6 +57,7 @@
       <button class="volumnBut" id="volumnBut" onclick="toggleVolumn()">
         <img id="volumnIcon" src="icons/volumnOn.svg" />
       </button>
+
       <button class="hudBut" id="hudBut" onclick="toggleHud()">
         <img id="hudIcon" src="icons/hud.svg" />
       </button>
@@ -79,8 +67,6 @@
       <img src="icons/lock.svg" />
       <p>Caps Lock</p>
     </div>
-
-    <input type="text" class="mandarinInput" id="input" autocomplete="off" />
 
     <div class="info">
       <p>

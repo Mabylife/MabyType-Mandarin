@@ -1,5 +1,5 @@
-import { char2phonetic } from "./char2phonetic.js";
-import { mQuotes } from "./mQuotes.js";
+import { char2phonetic } from "../pre_made_datas/char2phonetic.js";
+import { mQuotes } from "../pre_made_datas/mQuotes.js";
 
 const input = document.getElementById("input");
 input.addEventListener("input", checkAnswer);
