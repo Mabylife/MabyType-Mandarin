@@ -94,9 +94,9 @@ function startSecondsTimer(s, callback) {
   const startTime = performance.now();
   function check() {
     const now = performance.now();
-    console.log(`Time elapsed: ${(now - startTime) / 1000} seconds`);
     if (now - startTime >= s * 1000) {
-      console.log(`Total time: ${(now - startTime) / 1000} seconds`);
+      totalUsedTime = (now - startTime) / 1000; // 計算總用時
+      console.log(`實際總用時: ${totalUsedTime} 秒`);
       callback();
       timerId = null;
     } else {
@@ -120,6 +120,7 @@ function finish() {
   input.blur();
   input.removeEventListener("input", checkAnswer);
   deleteNoneMandarinChars();
+  getResult();
 }
 
 function deleteNoneMandarinChars() {
@@ -180,3 +181,20 @@ function removeUnderline() {
   }, 0); // 超級宇宙炸裂貼心之幫你消除底線之術步驟二
 }
 
+let totalUsedTime;
+
+function getResult() {
+  const incorrectChars = document.querySelectorAll(".incorrect");
+  const correctChars = document.querySelectorAll(".correct");
+  const totalChars = incorrectChars.length + correctChars.length;
+  const accuracy = (correctChars.length / totalChars) * 100;
+  const wpm = (totalChars / totalUsedTime) * 60; // 每分鐘打字數
+  console.log(`總字數: ${totalChars}`);
+  console.log(`正確字數: ${correctChars.length}`);
+  console.log(`錯誤字數: ${incorrectChars.length}`);
+  console.log(`正確率: ${accuracy.toFixed(2)}%`);
+  if (how2Finish[0] === "onTime") {
+    console.log(`用時: ${how2Finish[1]} 秒`);
+  }
+  console.log(`每分鐘打字數: ${wpm.toFixed(2)}`);
+}
