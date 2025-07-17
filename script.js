@@ -76,8 +76,12 @@ function scrollTheWholeShit() {
   const charElement = document.querySelector(".char");
   const perScrollWidth = charElement ? charElement.clientWidth : 0;
   const scrollWidth = typedChar * perScrollWidth;
-  input.style.transform = `translateX(-${scrollWidth}px)`;
-  text.style.transform = `translateX(-${scrollWidth}px)`;
+  const centerCon = document.querySelector(".centerCon");
+  if (scrollWidth === 0) {
+    centerCon.style.transform = "translateX(50%)";
+  } else {
+    centerCon.style.transform = `translateX(calc(50% - ${scrollWidth}px))`;
+  }
 }
 
 function start() {
@@ -118,6 +122,7 @@ function finish() {
   isFinished = true;
   console.log("Finish");
   input.blur();
+  input.classList.add("finished");
   input.removeEventListener("input", checkAnswer);
   deleteNoneMandarinChars();
   getResult();
@@ -139,6 +144,7 @@ input.addEventListener("focus", () => {
 });
 
 function startNewGameReset() {
+  input.classList.remove("finished");
   input.addEventListener("input", checkAnswer);
   stopSecondsTimer(); // 停止計時器
   isStarted = false;
@@ -147,6 +153,7 @@ function startNewGameReset() {
   input.focus();
   input.value = "";
   addText();
+  scrollTheWholeShit();
   input.style.width = "100%";
   input.style.transform = "translateX(0)";
   text.style.transform = "translateX(0)";

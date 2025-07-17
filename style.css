@@ -1,6 +1,6 @@
 @import "./animation.css";
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Khand:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:wght@400&display=swap");
 
 * {
   margin: 0;
@@ -8,14 +8,8 @@
   box-sizing: border-box;
 }
 
-.chiron-hei-hk {
-  font-family: "Chiron Hei HK", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
-
 body {
+  position: relative;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -337,13 +331,6 @@ button::after {
   animation: spin 1s ease-in-out infinite;
 }
 
-.mandarinInput {
-  background-color: black;
-  text-align: start;
-  overflow: hidden;
-  white-space: nowrap; /* 用這個取代 text-wrap */
-}
-
 .footer {
   position: absolute;
   bottom: 30px;
@@ -380,18 +367,34 @@ button::after {
   line-height: normal;
 }
 
-.centerCon {
-  position: absolute;
-  left: 50%;
+.centerCon {  
+  transform: translateX(50%);
   display: flex;
+  width: auto;
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  align-items: start;
+  transition: all 0.15s ease-in-out;
 }
 
 .mandarinInput {
+  transform: translateX(-25px) !important;
+  padding: 25px;
+  text-align: left;
   background-color: #777;
-  color: #f4f3f1;
+  color: #353535;
   outline: none;
+  border-radius: 15px;
+  border: none;
+  font-size: 50px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.char {
+  font-size: 50px;
+}
+
+.mandarinInput.finished {
+  opacity: 0.2;
 }
