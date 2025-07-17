@@ -389,6 +389,7 @@ button::after {
   font-size: 50px;
   box-sizing: border-box;
   width: 100%;
+  cursor: text;
 }
 
 .char {
@@ -397,4 +398,8 @@ button::after {
 
 .mandarinInput.finished {
   opacity: 0.2;
+}
+
+.mainTextCon{
+  user-select: none;  
 }
