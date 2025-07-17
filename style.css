@@ -8,8 +8,13 @@
 }
 
 body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #353535;
-  overflow: hidden;
 }
 
 .container {
@@ -17,20 +22,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  height: max-content;
+  width: 100%;
   gap: 150px;
-  overflow: hidden;
-}
-
-.opacityNone {
-  position: absolute;
-  top: 0;
-  left: 0;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
 }
 
 .wordmark {
@@ -44,7 +38,8 @@ body {
   cursor: default;
 }
 
-.mainTextCon, .mandarinInput {
+.mainTextCon,
+.mandarinInput {
   align-self: self-start;
   position: absolute;
   left: 50%;
@@ -181,27 +176,7 @@ button::after {
   left: 50%;
   transform: translate(-50%, -50%) translateY(-5.5px);
   position: absolute;
-}
-
-.mainTextChar {
-  margin: 0;
-  padding: 0;
-  flex-shrink: 0;
-}
-
-.wrongSpace::after {
-  color: #ec9495;
-  font-family: Khand;
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  text-wrap: nowrap;
-  flex-shrink: 0;
-  content: "_";
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  opacity: 0;
 }
 
 .unfocused {
@@ -264,127 +239,6 @@ button::after {
   transition: all 0.2s ease-in;
 }
 
-.resultConLeft {
-  width: max-content;
-  height: 180px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0;
-}
-
-.wpmText {
-  color: #777;
-  font-family: "Bebas Neue";
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 2px;
-}
-
-.wpmValue {
-  color: #f4f3f1;
-  font-family: "Bebas Neue";
-  font-size: 64px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 3.2px;
-}
-
-.grossText {
-  color: #777;
-  font-family: Khand;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 48px;
-  letter-spacing: 1.2px;
-}
-
-.resultConRight {
-  width: max-content;
-  height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: start;
-}
-
-.cpmCon,
-.accCon,
-.timeCon {
-  width: max-content;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  font-family: "Bebas Neue";
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 2px;
-}
-
-.cpmText,
-.accText,
-.timeText {
-  color: #777;
-  width: 79px;
-}
-
-.cpmValue,
-.accValue,
-.timeValue {
-  color: #f4f3f1;
-}
-
-.cpmText:hover::before,
-.accText:hover::before,
-.timeText:hover::before,
-.wpmText:hover::before {
-  color: #777;
-  position: absolute;
-  bottom: 45px;
-  left: 0;
-  font-family: Khand;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 1.2px;
-  text-wrap: nowrap;
-}
-
-.cpmText,
-.accText,
-.timeText,
-.wpmText {
-  position: relative;
-}
-
-.wpmText:hover::before {
-  content: "Words Per Minute";
-}
-
-.accText:hover::before {
-  content: "Accuracy";
-}
-
-.timeText:hover::before {
-  content: "Total typing time";
-}
-
-.cpmText:hover::before {
-  content: "Characters Per Minute";
-}
-
 .hud {
   position: absolute;
   transition: all 0.2s ease-in;
@@ -406,20 +260,6 @@ button::after {
 .hudCounter {
   bottom: calc(50% + 77px);
   left: calc(50% + 20px);
-}
-
-.altButCon {
-  display: flex;
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-  flex-direction: row;
-  justify-content: end;
-  gap: 20px;
-  width: 130px;
-  height: 55px;
-  flex-shrink: 0;
-  flex-grow: 0;
 }
 
 #volumnBut,
@@ -479,25 +319,6 @@ button::after {
   vertical-align: middle;
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  position: absolute;
-  left: 30px;
-  bottom: 30px;
-  height: 50px;
-}
-
-.info p {
-  color: #777;
-  font-family: Khand;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-}
-
 .loadingScreen {
   position: absolute;
   top: 0;
@@ -520,8 +341,42 @@ button::after {
 
 .mandarinInput {
   background-color: black;
-  bottom: 450px;
   text-align: start;
   overflow: hidden;
   text-wrap: nowrap;
+}
+
+.footer {
+  width: 100%;
+  height: max-content; /* 確保高度固定 */
+  display: flex;
+  justify-content: space-between; /* 左右對齊 */
+  align-items: end; /* 垂直居中 */
+  padding: 30px; /* 增加內邊距 */
+  z-index: 10; /* 確保 footer 在最上層 */
+  
+}
+
+.footer .info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 增加段落之間的間距 */
+}
+
+.footer .altButCon {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-around;
+  gap: 20px; /* 按鈕之間的間距 */
+}
+
+.info p {
+  color: #777;
+  font-family: Khand;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }

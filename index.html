@@ -19,7 +19,15 @@
   <body>
     <div class="container">
       <h1 class="wordmark">mabytype</h1>
-      <p class="mainTextCon" id="text"></p>
+      <div class="centerCon">
+        <p class="mainTextCon" id="text"></p>
+        <input
+          type="text"
+          class="mandarinInput"
+          id="input"
+          autocomplete="off"
+        />
+      </div>
 
       <div class="butCon">
         <button class="modeBut fake3d" id="modeBut" onclick="changeMode()">
@@ -34,7 +42,24 @@
       </div>
     </div>
 
-    <input type="text" class="mandarinInput" id="input" autocomplete="off" />
+    <div class="footer">
+      <div class="info">
+        <p>
+          Made by Mabylife<br />
+          MabyType v1.0.4<br />
+          https://mabylife.github.io/mabyType
+        </p>
+      </div>
+
+      <div class="altButCon" id="altButCon">
+        <button class="volumnBut" id="volumnBut" onclick="toggleVolumn()">
+          <img id="volumnIcon" src="icons/volumnOn.svg" />
+        </button>
+        <button class="hudBut" id="hudBut" onclick="toggleHud()">
+          <img id="hudIcon" src="icons/hud.svg" />
+        </button>
+      </div>
+    </div>
 
     <div class="line"></div>
 
@@ -53,28 +78,11 @@
     <p class="hudTimer hud" id="hudTimer">0s</p>
     <p class="hudCounter hud" id="hudCounter">0</p>
 
-    <div class="altButCon" id="altButCon">
-      <button class="volumnBut" id="volumnBut" onclick="toggleVolumn()">
-        <img id="volumnIcon" src="icons/volumnOn.svg" />
-      </button>
-
-      <button class="hudBut" id="hudBut" onclick="toggleHud()">
-        <img id="hudIcon" src="icons/hud.svg" />
-      </button>
-    </div>
-
     <div class="capsLockWanring" id="capsLockWarning">
       <img src="icons/lock.svg" />
       <p>Caps Lock</p>
     </div>
 
-    <div class="info">
-      <p>
-        Made by Mabylife<br />
-        MabyType v1.0.4<br />
-        https://mabylife.github.io/mabyType
-      </p>
-    </div>
     <script type="module" src="script.js"></script>
   </body>
 </html>
