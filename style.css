@@ -1,10 +1,18 @@
 @import "./animation.css";
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Khand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:wght@500&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.chiron-hei-hk {
+  font-family: "Chiron Hei HK", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
 body {
@@ -22,9 +30,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: max-content;
+  height: 100%;
   width: 100%;
   gap: 150px;
+  overflow: hidden;
 }
 
 .wordmark {
@@ -40,19 +49,15 @@ body {
 
 .mainTextCon,
 .mandarinInput {
-  align-self: self-start;
-  position: absolute;
-  left: 50%;
   display: flex;
-  height: max-content;
   color: #777;
-  font-family: Khand;
+  font-family: "Chiron Hei HK", sans-serif;
   font-size: 60px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   letter-spacing: 5px;
-  text-wrap: nowrap;
+  white-space: nowrap;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
@@ -60,13 +65,6 @@ body {
   position: relative;
   cursor: default;
   transition: all 0.15s ease-in-out;
-}
-
-.mainTextSpace {
-  width: 20px;
-  height: 100%;
-  flex-shrink: 0;
-  position: relative;
 }
 
 .incorrect {
@@ -343,18 +341,19 @@ button::after {
   background-color: black;
   text-align: start;
   overflow: hidden;
-  text-wrap: nowrap;
+  white-space: nowrap; /* 用這個取代 text-wrap */
 }
 
 .footer {
+  position: absolute;
+  bottom: 30px;
   width: 100%;
   height: max-content; /* 確保高度固定 */
   display: flex;
   justify-content: space-between; /* 左右對齊 */
   align-items: end; /* 垂直居中 */
-  padding: 30px; /* 增加內邊距 */
+  padding: 0 30px 0 30px; /* 增加內邊距 */
   z-index: 10; /* 確保 footer 在最上層 */
-  
 }
 
 .footer .info {
@@ -379,4 +378,20 @@ button::after {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.centerCon {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: start;
+}
+
+.mandarinInput {
+  background-color: #777;
+  color: #f4f3f1;
+  outline: none;
 }
