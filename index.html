@@ -17,29 +17,19 @@
     <link rel="icon shortcut" href="favicon.ico" />
   </head>
   <body>
-    <div class="container">
-      <h1 class="wordmark">mabytype</h1>
-      <div class="centerCon">
-        <p class="mainTextCon" id="text"></p>
-        <input
-          type="text"
-          class="mandarinInput"
-          id="input"
-          autocomplete="off"
-        />
-      </div>
-
-      <div class="butCon">
-        <button class="modeBut fake3d" id="modeBut" onclick="changeMode()">
-          10 Words
-        </button>
-        <button class="replayBut fake3d" id="replayBut" onclick="replay()">
-          <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
-        </button>
-        <button class="nextBut fake3d" id="nextBut" onclick="next()">
-          <img id="nextLogo" src="icons/next.svg" alt="next" />
-        </button>
-      </div>
+    <h1 id="wordmark" class="wordmark">mabytype</h1>
+    <p class="mainTextCon" id="text"></p>
+    <input type="text" class="mandarinInput" id="input" autocomplete="off" />
+    <div class="butCon">
+      <button class="modeBut fake3d" id="modeBut" onclick="changeMode()">
+        10 Words
+      </button>
+      <button class="replayBut fake3d" id="replayBut" onclick="replay()">
+        <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
+      </button>
+      <button class="nextBut fake3d" id="nextBut" onclick="next()">
+        <img id="nextLogo" src="icons/next.svg" alt="next" />
+      </button>
     </div>
 
     <div class="footer">
@@ -77,11 +67,6 @@
 
     <p class="hudTimer hud" id="hudTimer">0s</p>
     <p class="hudCounter hud" id="hudCounter">0</p>
-
-    <div class="capsLockWanring" id="capsLockWarning">
-      <img src="icons/lock.svg" />
-      <p>Caps Lock</p>
-    </div>
 
     <script type="module" src="script.js"></script>
   </body>

@@ -1,6 +1,5 @@
 @import "./animation.css";
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Khand:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Khand:wght@300;400;500;600;700&family=Chiron+Hei+HK:wght@400&display=swap");
 
 * {
   margin: 0;
@@ -8,26 +7,18 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 body {
   position: relative;
   height: 100vh;
   width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #353535;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  gap: 150px;
-  overflow: hidden;
+  clip-path: inset(0 0 0 0);
 }
 
 .wordmark {
@@ -43,7 +34,6 @@ body {
 
 .mainTextCon,
 .mandarinInput {
-  display: flex;
   color: #777;
   font-family: "Chiron Hei HK", sans-serif;
   font-size: 60px;
@@ -53,12 +43,7 @@ body {
   letter-spacing: 5px;
   white-space: nowrap;
   flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
   cursor: default;
-  transition: all 0.15s ease-in-out;
 }
 
 .incorrect {
@@ -157,18 +142,6 @@ button::after {
 .wordmark,
 .butCon {
   transition: all 0.2s ease-in;
-}
-
-.line {
-  height: 80px;
-  width: 3px;
-  background-color: white;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(-5.5px);
-  position: absolute;
-  opacity: 0;
 }
 
 .unfocused {
@@ -367,24 +340,13 @@ button::after {
   line-height: normal;
 }
 
-.centerCon {  
-  transform: translateX(50%);
-  display: flex;
-  width: auto;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-  transition: all 0.15s ease-in-out;
-}
-
 .mandarinInput {
-  transform: translateX(-25px) !important;
   padding: 25px;
   text-align: left;
   background-color: #777;
   color: #353535;
   outline: none;
-  border-radius: 15px;
+  border-radius: 15px 0 0 15px;
   border: none;
   font-size: 50px;
   box-sizing: border-box;
@@ -394,12 +356,50 @@ button::after {
 
 .char {
   font-size: 50px;
+  flex-shrink: none;
+  display: inline-block;
 }
 
 .mandarinInput.finished {
   opacity: 0.2;
 }
 
-.mainTextCon{
-  user-select: none;  
+.wordmark {
+  position: absolute;
+  inset: calc(50% - 300px) auto auto 50%;
+  z-index: 1;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.mainTextCon {
+  display: flex;
+  position: absolute;
+  inset: calc(50% - 50px) auto auto 50%;
+  left: 50%; /* <-- Add this line */
+  z-index: 1;
+  transform: translateY(-50%);
+  user-select: none;
+  overflow: hidden;
+  min-width: 400px;
+}
+
+.mandarinInput {
+  position: absolute;
+  inset: calc(50% + 50px) auto auto 50%;
+  left: calc(50% - 25px); /* <-- Add this line */
+  z-index: 1;
+  transform: translateY(-50%);
+  min-width: 400px;
+}
+
+.butCon {
+  position: absolute;
+  inset: calc(50% + 300px) auto auto 50%;
+  z-index: 1;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+#text,
+#input {
+  will-change: transform;
 }
