@@ -5,6 +5,7 @@ console.log("script.js loaded");
 const input = document.getElementById("input");
 const text = document.getElementById("text");
 const nextBut = document.getElementById("nextBut");
+const replayBut = document.getElementById("replayBut");
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
 let how2Finish = ["onTime", 5]; // 預設 30 秒後結束
@@ -16,6 +17,7 @@ let isAutoCorrectOn = true; // 是否啟用宇宙霹靂無敵貼心之自動選�
 let lastInputValue = "";
 const isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
 window.next = next;
+window.replay = replay;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -177,22 +179,27 @@ input.addEventListener("focus", () => {
   }
 });
 
-function startNewGameReset() {
+function startNewGameReset(ifAddText) {
   input.classList.remove("finished");
   stopSecondsTimer();
   isStarted = false;
   isFinished = false;
-  text.innerHTML = "";
   input.focus();
   input.value = "";
-  addText();
+  document.querySelectorAll(".correct, .incorrect").forEach((el) => {
+    el.classList.remove("correct", "incorrect");
+  });
+  if (ifAddText) {
+    text.innerHTML = "";
+    addText();
+  }
   requestAnimationFrame(() => {
     scrollTheWholeShit();
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  startNewGameReset();
+  startNewGameReset(true);
   windowWidth = window.innerWidth; // 更新視窗寬度
   document.body.style.width = windowWidth + "px"; // 更新 body 寬度
   text.style.width = windowWidth / 2 + "px"; // 更新文字寬度
@@ -211,15 +218,25 @@ function next() {
     nextBut.classList.remove("active");
   }, 300);
   nextBut.classList.add("active");
-  startNewGameReset();
+  startNewGameReset(true);
+}
+
+function replay() {
+  setTimeout(() => {
+    replayBut.classList.remove("active");
+  }, 300);
+  replayBut.classList.add("active");
+  startNewGameReset(false);
 }
 
 document.addEventListener("keydown", (e) => {
-  switch (e.key) {
-    case "Tab":
-      e.preventDefault(); // 阻止 Tab 鍵的預設行為
-      next();
-      break;
+  if (e.key === "Tab") {
+    e.preventDefault(); // 阻止 Tab 鍵的預設行為
+    next();
+  }
+  if (e.altKey && e.key.toLowerCase() === "r") {
+    e.preventDefault(); // 阻止 Alt + R 的預設行為
+    replay();
   }
 });
 
