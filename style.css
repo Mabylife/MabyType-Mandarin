@@ -1,10 +1,17 @@
 @import "./animation.css";
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Khand:wght@300;400;500;600;700&family=Chiron+Hei+HK:wght@400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.nst {
+  font-family: "Noto Sans TC", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
 html {
