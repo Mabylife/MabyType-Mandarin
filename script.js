@@ -6,6 +6,9 @@ const input = document.getElementById("input");
 const text = document.getElementById("text");
 const nextBut = document.getElementById("nextBut");
 const replayBut = document.getElementById("replayBut");
+const settingBut = document.getElementById("settingBut");
+const settingCon = document.getElementById("settingCon");
+
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
 let how2Finish = ["onTime", 5]; // 預設 30 秒後結束
@@ -18,6 +21,9 @@ let lastInputValue = "";
 const isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
 window.next = next;
 window.replay = replay;
+window.setting = setting;
+
+let isSettingOpen = false;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -256,4 +262,20 @@ function getResult() {
     console.log(`用時: ${how2Finish[1]} 秒`);
   }
   console.log(`每分鐘打字數: ${wpm}`);
+}
+
+function setting() {
+  if (isSettingOpen) { // 如果設定已經開啟
+    settingCon.classList.remove("open");
+    input.style.visibility = "visible";
+    text.style.visibility = "visible";
+    isSettingOpen = false;
+    input.focus(); // 重新聚焦到輸入框
+  } else {
+    input.blur(); // 失去焦點
+    settingCon.classList.add("open");
+    input.style.visibility = "hidden";
+    text.style.visibility = "hidden";
+    isSettingOpen = true;
+  }
 }

@@ -142,8 +142,8 @@ button::after {
   content: "tab";
 }
 
-.modeBut::after {
-  content: "alt+m";
+.settingBut::after {
+  content: "alt+/";
 }
 
 .wordmark,
@@ -410,4 +410,30 @@ button::after {
 #text,
 #input {
   will-change: transform;
+}
+
+.settingCon {
+  position: absolute;
+  inset: 25% 25% 25% 25%;
+  width: 1000px;
+  height: 450px;
+  border-radius: 15px;
+  border: #ec9495 3px solid;
+  color: #f4f3f1;
+  padding: 50px;
+  text-wrap: wrap;
+  overflow: scroll;
+  opacity: 1;
+  transition: all 0.15s ease-in;
+  z-index: 1000;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+.settingCon::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.settingCon.open {
+  opacity: 1;
+  z-index: 1000;
 }

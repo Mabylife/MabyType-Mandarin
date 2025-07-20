@@ -18,6 +18,7 @@
   </head>
   <body>
     <h1 id="wordmark" class="wordmark">mabytype</h1>
+    <div class="settingCon" id="settingCon"></div>
     <p class="mainTextCon nst" id="text"></p>
     <input
       type="text"
@@ -26,8 +27,8 @@
       autocomplete="off"
     />
     <div class="butCon">
-      <button class="modeBut fake3d" id="modeBut" onclick="changeMode()">
-        10 Words
+      <button class="settingBut fake3d" id="settingBut" onclick="setting()">
+        <img id="settingLogo" src="icons/setting.svg" alt="setting" />
       </button>
       <button class="replayBut fake3d" id="replayBut" onclick="replay()">
         <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
