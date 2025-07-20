@@ -1,32 +1,21 @@
 import { char2phonetic } from "./pre_made_datas/char2phonetic.js";
 import { mQuotes } from "./pre_made_datas/mQuotes.js";
-
-window.addEventListener("error", (e) =>
-  console.error("Global error:", e.error)
-);
-window.addEventListener("unhandledrejection", (e) =>
-  console.error("Unhandled promise rejection:", e.reason)
-);
-
-// 2. 確認 script 有被執行
-console.log("🔥 script.js loaded");
+console.log("script.js loaded");
 
 const input = document.getElementById("input");
 const text = document.getElementById("text");
+const nextBut = document.getElementById("nextBut");
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
 let how2Finish = ["onTime", 5]; // 預設 30 秒後結束
 let isStarted = false;
 let isFinished = false;
 let windowWidth; // 獲取視窗寬度
-window.next = next;
-const hiddenBut = document.createElement("button");
-hiddenBut.style.position = "absolute";
-hiddenBut.style.left = "-9999px";
-document.body.appendChild(hiddenBut);
 let debounceTimer = null; // 用於防抖
-
-const nextBut = document.getElementById("nextBut"); // Ensure you have an element with id="nextBut"
+let isAutoCorrectOn = true; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
+let lastInputValue = "";
+const isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
+window.next = next;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -38,8 +27,6 @@ input.addEventListener("input", () => {
     checkAnswer();
   }, 0);
 });
-
-let lastInputValue = "";
 
 function checkAnswer() {
   let inputValue = (input.value.match(/[\u4e00-\u9fff，。]/g) || [])
@@ -53,7 +40,9 @@ function checkAnswer() {
 
   if (!isStarted && inputValue !== "") start(); // 如果還沒開始遊戲，且有輸入文字，則開始遊戲
 
-  input.blur();
+  if (isAutoDeleteUnderlineOn) {
+    input.blur();
+  }
 
   const spans = text.querySelectorAll("span");
   let needAutoComplete = false;
@@ -64,8 +53,8 @@ function checkAnswer() {
     if (inputPhonetics.some((p) => textPhonetics.includes(p))) {
       spans[i].classList.remove("correct", "incorrect");
       spans[i].classList.add("correct");
-      // 自動補全
-      if (input.value.charAt(i) !== spans[i].textContent) {
+
+      if (isAutoCorrectOn && input.value.charAt(i) !== spans[i].textContent) {
         input.value =
           input.value.substring(0, i) +
           spans[i].textContent +
@@ -79,7 +68,10 @@ function checkAnswer() {
     }
   }
 
-  input.focus();
+  if (isAutoDeleteUnderlineOn) {
+    input.focus();
+  }
+
   requestAnimationFrame(() => {
     scrollTheWholeShit();
   });
@@ -141,14 +133,13 @@ function start() {
   }
 }
 
-let timerId = null; // 全域變數保存 requestAnimationFrame id
-
+let timerId = null;
 function startSecondsTimer(s, callback) {
   const startTime = performance.now();
   function check() {
     const now = performance.now();
     if (now - startTime >= s * 1000) {
-      totalUsedTime = (now - startTime) / 1000; // 計算總用時
+      totalUsedTime = (now - startTime) / 1000;
       console.log(`實際總用時: ${totalUsedTime} 秒`);
       callback();
       timerId = null;
@@ -159,7 +150,6 @@ function startSecondsTimer(s, callback) {
   check();
 }
 
-// 手動停止計時器
 function stopSecondsTimer() {
   if (timerId !== null) {
     cancelAnimationFrame(timerId);
@@ -177,8 +167,8 @@ function finish() {
 }
 
 function deleteNoneMandarinChars() {
-  const typedChar = document.querySelectorAll(".correct, .incorrect").length;
-  input.value = input.value.substring(0, typedChar); //減去多餘的注音...
+  // 清空 input，只保留中文字
+  input.value = input.value.replace(/[^\u4e00-\u9fff，。]/g, "");
 }
 
 input.addEventListener("focus", () => {
