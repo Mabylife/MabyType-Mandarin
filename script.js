@@ -15,7 +15,7 @@ const input = document.getElementById("input");
 const text = document.getElementById("text");
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
-let how2Finish = ["onTime", 1000]; // 預設 10 秒後結束
+let how2Finish = ["onTime", 5]; // 預設 30 秒後結束
 let isStarted = false;
 let isFinished = false;
 let windowWidth; // 獲取視窗寬度
@@ -52,8 +52,6 @@ function checkAnswer() {
   if (!isStarted && inputValue !== "") {
     start();
   }
-
-  if (inputValue.length < 1) return;
 
   input.blur();
 
@@ -208,6 +206,14 @@ document.addEventListener("DOMContentLoaded", () => {
   windowWidth = window.innerWidth; // 更新視窗寬度
   document.body.style.width = windowWidth + "px"; // 更新 body 寬度
   text.style.width = windowWidth / 2 + "px"; // 更新文字寬度
+  window.addEventListener("resize", () => {
+    windowWidth = window.innerWidth; // 更新視窗寬度
+    document.body.style.width = windowWidth + "px"; // 更新 body 寬度
+    text.style.width = windowWidth / 2 + "px"; // 更新文字寬度
+    requestAnimationFrame(() => {
+      scrollTheWholeShit();
+    });
+  });
 });
 
 function next() {

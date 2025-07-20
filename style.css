@@ -148,7 +148,7 @@ button::after {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -5;
+  z-index: -100;
   display: flex;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
@@ -362,6 +362,7 @@ button::after {
 
 .mandarinInput.finished {
   opacity: 0.2;
+  cursor: not-allowed;
 }
 
 .wordmark {
