@@ -46,12 +46,12 @@ function checkAnswer() {
     .join("")
     .trim();
 
-  if (lastInputValue !== null && inputValue === lastInputValue) return;
+  if (lastInputValue !== null && inputValue === lastInputValue) return; // 防止重複檢查
+  if (inputValue.length === 0 && input.value.length !== 0) return; // 防止檢查拼音中文字
+
   lastInputValue = inputValue;
 
-  if (!isStarted && inputValue !== "") {
-    start();
-  }
+  if (!isStarted && inputValue !== "") start(); // 如果還沒開始遊戲，且有輸入文字，則開始遊戲
 
   input.blur();
 
