@@ -262,6 +262,10 @@ function getResult() {
   let ratingChar = "";
   if (wpm < 15 || accuracy < 90) {
     ratingChar = "F";
+  } else if (wpm >= 180) {
+    ratingChar = "SSS";
+  } else if (wpm >= 140) {
+    ratingChar = "SS";
   } else if (wpm >= 90) {
     ratingChar = "S";
   } else if (wpm >= 75) {
