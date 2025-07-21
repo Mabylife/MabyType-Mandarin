@@ -527,7 +527,8 @@ html.inGame .wordmark {
 }
 
 html.settingOpening .replayBut,
-html.settingOpening .nextBut {
+html.settingOpening .nextBut,
+html.settingOpening .resultCon {
   opacity: 0;
   pointer-events: none;
 }
@@ -539,13 +540,7 @@ html.settingOpening .nextBut {
   width: 20vw;
   height: 240px;
   flex-shrink: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(53, 53, 53, 0) 0%,
-    rgba(53, 53, 53, 0.75) 50%,
-    #353535 75%,
-    #353535 100%
-  );
+  background: linear-gradient(90deg, rgba(53, 53, 53, 0) 0%, rgba(53, 53, 53, 0.75) 50%, #353535 75%, #353535 100%);
   z-index: 2000;
 }
 
@@ -567,44 +562,24 @@ html.settingOpening .nextBut {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 420px;
-  height: 160px;
+  width: 700px;
+  height: 169px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: start;
-  align-content: space-between;
   color: #777;
   flex-shrink: 0;
   gap: 10px;
-}
-
-.resultItem {
-  width: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  align-items: center;
-  justify-content: start;
-}
-
-.resultItem h1 {
-  color: #777;
-  leading-trim: both;
-  text-edge: cap;
-  font-family: "Noto Sans TC";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 1.2px;
+  opacity: 0;
+  z-index: -1000;
+  transition: all 0.15s ease-in;
+  align-content: space-evenly;
 }
 
 .resultCon h1 {
   color: #777;
-  leading-trim: both;
-  text-edge: cap;
   font-family: "Noto Sans TC";
   font-size: 24px;
   font-style: normal;
@@ -615,14 +590,12 @@ html.settingOpening .nextBut {
 
 .resultCon p {
   color: #f4f3f1;
-  leading-trim: both;
-  text-edge: cap;
   font-family: "Bebas Neue";
   font-size: 64px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  letter-spacing: 3.2px;
+  transform: translateX(-5px);
 }
 
 .resultCon label {
@@ -635,33 +608,35 @@ html.settingOpening .nextBut {
   letter-spacing: 0.75px;
 }
 
-.resultItem p {
-  color: #f4f3f1;
-  font-family: "Bebas Neue";
+.resultItem {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: end;
+  justify-content: end;
+}
+
+.resultItem h1 {
+  color: #777;
+  font-family: "Noto Sans TC";
   font-size: 24px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   letter-spacing: 1.2px;
 }
 
-#modeResult {
+.resultItem p {
   color: #f4f3f1;
-  leading-trim: both;
-  text-edge: cap;
   font-family: "Noto Sans TC";
-  font-size: 18px;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
-  letter-spacing: -0.9px;
 }
 
-/* For debugging */
-.mainTextCon {
-  opacity: 0 !important;
-}
-
-.mandarinInput {
-  opacity: 0 !important;
+.resultCon.visible {
+  opacity: 1;
+  z-index: 1000;
 }

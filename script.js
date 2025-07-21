@@ -18,6 +18,7 @@ let windowWidth; // 獲取視窗寬度
 let debounceTimer = null; // 用於防抖
 let isAutoCorrectOn = true; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
 let lastInputValue = "";
+let isReplay = false; // 是否正在重玩
 const isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
 window.next = next;
 window.replay = replay;
@@ -38,9 +39,7 @@ input.addEventListener("input", () => {
 });
 
 function checkAnswer() {
-  let inputValue = (input.value.match(/[\u4e00-\u9fff，。]/g) || [])
-    .join("")
-    .trim();
+  let inputValue = (input.value.match(/[\u4e00-\u9fff，。]/g) || []).join("").trim();
 
   if (lastInputValue !== null && inputValue === lastInputValue) return; // 防止重複檢查
   if (inputValue.length === 0 && input.value.length !== 0) return; // 防止檢查拼音中文字
@@ -64,10 +63,7 @@ function checkAnswer() {
       spans[i].classList.add("correct");
 
       if (isAutoCorrectOn && input.value.charAt(i) !== spans[i].textContent) {
-        input.value =
-          input.value.substring(0, i) +
-          spans[i].textContent +
-          input.value.substring(i + 1);
+        input.value = input.value.substring(0, i) + spans[i].textContent + input.value.substring(i + 1);
       }
     } else if (inputValue.charAt(i) === "") {
       spans[i].classList.remove("correct", "incorrect");
@@ -112,9 +108,7 @@ function scrollTheWholeShit() {
   requestAnimationFrame(() => {
     const typedChar = document.querySelectorAll(".correct, .incorrect").length;
     const charElement = document.querySelector(".char");
-    const perScrollWidth = charElement
-      ? charElement.getBoundingClientRect().width
-      : 0;
+    const perScrollWidth = charElement ? charElement.getBoundingClientRect().width : 0;
     const scrollWidth = typedChar * perScrollWidth;
 
     requestAnimationFrame(() => {
@@ -127,8 +121,7 @@ function scrollTheWholeShit() {
       // transition 只設一次
       if (text.style.transition === "") {
         text.style.transition = "transform 0.15s ease-in-out";
-        input.style.transition =
-          "transform 0.15s ease-in-out, opacity 0.15s ease-in-out";
+        input.style.transition = "transform 0.15s ease-in-out, opacity 0.15s ease-in-out";
       }
     });
   });
@@ -189,8 +182,10 @@ input.addEventListener("focus", () => {
 });
 
 function startNewGameReset(ifAddText) {
+  document.getElementById("resultCon").classList.remove("visible");
   document.documentElement.classList.remove("inGame");
   input.style.opacity = "1";
+  text.style.opacity = "1";
   stopSecondsTimer();
   isStarted = false;
   isFinished = false;
@@ -224,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function next() {
+  isReplay = false;
   setTimeout(() => {
     nextBut.classList.remove("active");
   }, 300);
@@ -232,6 +228,7 @@ function next() {
 }
 
 function replay() {
+  isReplay = true;
   setTimeout(() => {
     replayBut.classList.remove("active");
   }, 300);
@@ -256,16 +253,45 @@ function getResult() {
   const incorrectChars = document.querySelectorAll(".incorrect");
   const correctChars = document.querySelectorAll(".correct");
   const totalChars = incorrectChars.length + correctChars.length;
-  const accuracy = (correctChars.length / totalChars) * 100;
-  const wpm = Math.round((totalChars / totalUsedTime) * 60); // 每分鐘打字數，四捨五入到整數
-  console.log(`總字數: ${totalChars}`);
-  console.log(`正確字數: ${correctChars.length}`);
-  console.log(`錯誤字數: ${incorrectChars.length}`);
-  console.log(`正確率: ${accuracy.toFixed(2)}%`);
-  if (how2Finish[0] === "onTime") {
-    console.log(`用時: ${how2Finish[1]} 秒`);
+  const accuracy = Number(correctChars.length / totalChars) * 100;
+  const wpm = Number((totalChars / totalUsedTime) * 60);
+  const wpmNet = Number((correctChars.length / totalUsedTime) * 60);
+  const resultCon = document.getElementById("resultCon");
+
+  // rating
+  let ratingChar = "";
+  if (wpm < 15 || accuracy < 90) {
+    ratingChar = "F";
+  } else if (wpm >= 90) {
+    ratingChar = "S";
+  } else if (wpm >= 75) {
+    ratingChar = "A+";
+  } else if (wpm >= 60) {
+    ratingChar = "A–";
+  } else if (wpm >= 45) {
+    ratingChar = "B+";
+  } else if (wpm >= 30) {
+    ratingChar = "B–";
+  } else if (wpm >= 25) {
+    ratingChar = "C+";
+  } else if (wpm >= 15) {
+    ratingChar = "C–";
   }
-  console.log(`每分鐘打字數: ${wpm}`);
+
+  // update the values in html
+  document.getElementById("wpmResult").textContent = `${Math.round(wpm)} / ${Math.round(wpmNet)}`;
+  document.getElementById("ratingResult").textContent = ratingChar;
+  document.getElementById("accuracyResult").textContent = `${accuracy % 1 === 0 ? accuracy.toFixed(0) : accuracy.toFixed(1)}%`;
+  if (isReplay) {
+    document.getElementById("modeResult").textContent = `名言 / ${how2Finish[1]} 秒 / 重玩`;
+  } else {
+    document.getElementById("modeResult").textContent = `名言 / ${how2Finish[1]} 秒`;
+  }
+
+  // display
+  resultCon.classList.add("visible");
+  text.style.opacity = "0";
+  input.style.opacity = "0";
 }
 
 function setting(setting, value) {
@@ -283,9 +309,7 @@ function setting(setting, value) {
 
 function applySettingsOnUI() {
   // Time setting
-  const timeButtons = document
-    .getElementById("timeSetting")
-    .querySelectorAll("button");
+  const timeButtons = document.getElementById("timeSetting").querySelectorAll("button");
   timeButtons.forEach((btn) => btn.classList.remove("selected"));
   if (how2Finish[0] === "onTime") {
     if (how2Finish[1] === 30) {
@@ -294,24 +318,19 @@ function applySettingsOnUI() {
       timeButtons[1].classList.add("selected");
     } else {
       timeButtons[2].classList.add("selected");
-      document.getElementById("timeSetting").querySelector("input").value =
-        how2Finish[1];
+      document.getElementById("timeSetting").querySelector("input").value = how2Finish[1];
     }
   }
 
   // Text type setting
-  const textTypeButtons = document
-    .getElementById("textTypeSetting")
-    .querySelectorAll("button");
+  const textTypeButtons = document.getElementById("textTypeSetting").querySelectorAll("button");
   textTypeButtons.forEach((btn) => btn.classList.remove("selected"));
   if (textType === "quote") {
     textTypeButtons[0].classList.add("selected");
   }
 
   // Auto delete underline setting
-  const autoDeleteUnderlineButtons = document
-    .getElementById("autoDeleteUnderlineSetting")
-    .querySelectorAll("button");
+  const autoDeleteUnderlineButtons = document.getElementById("autoDeleteUnderlineSetting").querySelectorAll("button");
   autoDeleteUnderlineButtons.forEach((btn) => btn.classList.remove("selected"));
   if (isAutoDeleteUnderlineOn) {
     autoDeleteUnderlineButtons[0].classList.add("selected");
@@ -320,9 +339,7 @@ function applySettingsOnUI() {
   }
 
   // Auto correct setting
-  const autoCorrectButtons = document
-    .getElementById("autoCorrectSetting")
-    .querySelectorAll("button");
+  const autoCorrectButtons = document.getElementById("autoCorrectSetting").querySelectorAll("button");
   autoCorrectButtons.forEach((btn) => btn.classList.remove("selected"));
   if (isAutoCorrectOn) {
     autoCorrectButtons[0].classList.add("selected");
@@ -339,16 +356,14 @@ function displaySetting() {
     input.style.opacity = "1";
     text.style.opacity = "1";
     isSettingOpen = false;
-    document.getElementById("settingBut").querySelector("img").src =
-      "icons/setting.svg";
+    document.getElementById("settingBut").querySelector("img").src = "icons/setting.svg";
     document.getElementById("settingBut").classList.remove("settingOn");
     next();
     document.documentElement.classList.remove("settingOpening");
   } else {
     document.documentElement.classList.add("settingOpening");
     document.getElementById("settingBut").classList.add("settingOn");
-    document.getElementById("settingBut").querySelector("img").src =
-      "icons/xcircle.svg";
+    document.getElementById("settingBut").querySelector("img").src = "icons/xcircle.svg";
     input.blur(); // 失去焦點
     settingCon.classList.add("open");
     input.style.opacity = "0";
