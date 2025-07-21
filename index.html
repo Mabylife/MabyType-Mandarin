@@ -18,7 +18,79 @@
   </head>
   <body>
     <h1 id="wordmark" class="wordmark">mabytype</h1>
-    <div class="settingCon" id="settingCon"></div>
+    <div class="settingCon" id="settingCon">
+      <div class="settingItem" id="timeSetting">
+        <h1 class="settingName nst">計時時間</h1>
+        <div style="width: 100px;"></div>
+        <button class="settingOption nst" onclick="setting('time', 30)">
+          30秒
+        </button>
+        <button class="settingOption nst" onclick="setting('time', 60)">
+          60秒
+        </button>
+        <button
+          class="settingOption withInput nst"
+          onclick="setting('time', document.getElementById('customTime').value)"
+        >
+          自訂
+        </button>
+        <input
+          class="settingInput nst"
+          type="number"
+          id="customTime"
+          value="90"
+          min="1"
+          oninput="setting('time', document.getElementById('customTime').value)"
+        />
+      </div>
+      <div class="settingItem" id="textTypeSetting">
+        <h1 class="settingName nst">文字類型</h1>
+        <div style="width: 100px;"></div>
+        <button
+          class="settingOption nst"
+          onclick="setting('textType', 'quote')"
+        >
+          名言
+        </button>
+        <button class="settingOption disable nst">敬請期待</button>
+      </div>
+      <div class="settingItem" id="autoDeleteUnderlineSetting">
+        <h1 class="settingName nst">自動消除底線</h1>
+        <div style="width: 50px;"></div>
+        <button
+          class="settingOption nst"
+          onclick="setting('autoDeleteUnderline', true)"
+        >
+          ON
+        </button>
+        <button
+          class="settingOption disable nst disable"
+          onclick="setting('autoDeleteUnderline', false)"
+        >
+          OFF
+        </button>
+      </div>
+      <div
+        class="settingItem"
+        style="margin-top: 50px;"
+        id="autoCorrectSetting"
+      >
+        <h1 class="settingName nst">自動選字</h1>
+        <div style="width: 100px;"></div>
+        <button
+          class="settingOption nst"
+          onclick="setting('autoCorrect', true)"
+        >
+          ON
+        </button>
+        <button
+          class="settingOption nst"
+          onclick="setting('autoCorrect', false)"
+        >
+          OFF
+        </button>
+      </div>
+    </div>
     <p class="mainTextCon nst" id="text"></p>
     <input
       type="text"
@@ -27,7 +99,11 @@
       autocomplete="off"
     />
     <div class="butCon">
-      <button class="settingBut fake3d" id="settingBut" onclick="setting()">
+      <button
+        class="settingBut fake3d"
+        id="settingBut"
+        onclick="displaySetting()"
+      >
         <img id="settingLogo" src="icons/setting.svg" alt="setting" />
       </button>
       <button class="replayBut fake3d" id="replayBut" onclick="replay()">

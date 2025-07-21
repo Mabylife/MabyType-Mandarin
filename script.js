@@ -11,7 +11,7 @@ const settingCon = document.getElementById("settingCon");
 
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
-let how2Finish = ["onTime", 5]; // 預設 30 秒後結束
+let how2Finish = ["onTime", 30]; // 預設 30 秒後結束
 let isStarted = false;
 let isFinished = false;
 let windowWidth; // 獲取視窗寬度
@@ -22,6 +22,7 @@ const isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之
 window.next = next;
 window.replay = replay;
 window.setting = setting;
+window.displaySetting = displaySetting;
 
 let isSettingOpen = false;
 
@@ -169,7 +170,7 @@ function finish() {
   isFinished = true;
   console.log("Finish");
   input.blur();
-  input.classList.add("finished");
+  input.style.opacity = "0.2";
   deleteNoneMandarinChars();
   getResult();
 }
@@ -264,18 +265,83 @@ function getResult() {
   console.log(`每分鐘打字數: ${wpm}`);
 }
 
-function setting() {
-  if (isSettingOpen) { // 如果設定已經開啟
+function setting(setting, value) {
+  if (setting === "time") {
+    how2Finish[1] = value;
+  } else if (setting === "textType") {
+    textType = value;
+  } else if (setting === "autoDeleteUnderline") {
+    isAutoDeleteUnderlineOn = value;
+  } else if (setting === "autoCorrect") {
+    isAutoCorrectOn = value;
+  }
+  applySettingsOnUI();
+}
+
+function applySettingsOnUI() {
+  // Time setting
+  const timeButtons = document
+    .getElementById("timeSetting")
+    .querySelectorAll("button");
+  timeButtons.forEach((btn) => btn.classList.remove("selected"));
+  if (how2Finish[0] === "onTime") {
+    if (how2Finish[1] === 30) {
+      timeButtons[0].classList.add("selected");
+    } else if (how2Finish[1] === 60) {
+      timeButtons[1].classList.add("selected");
+    } else {
+      timeButtons[2].classList.add("selected");
+      document.getElementById("timeSetting").querySelector("input").value =
+        how2Finish[1];
+    }
+  }
+
+  // Text type setting
+  const textTypeButtons = document
+    .getElementById("textTypeSetting")
+    .querySelectorAll("button");
+  textTypeButtons.forEach((btn) => btn.classList.remove("selected"));
+  if (textType === "quote") {
+    textTypeButtons[0].classList.add("selected");
+  }
+
+  // Auto delete underline setting
+  const autoDeleteUnderlineButtons = document
+    .getElementById("autoDeleteUnderlineSetting")
+    .querySelectorAll("button");
+  autoDeleteUnderlineButtons.forEach((btn) => btn.classList.remove("selected"));
+  if (isAutoDeleteUnderlineOn) {
+    autoDeleteUnderlineButtons[0].classList.add("selected");
+  } else {
+    autoDeleteUnderlineButtons[1].classList.add("selected");
+  }
+
+  // Auto correct setting
+  const autoCorrectButtons = document
+    .getElementById("autoCorrectSetting")
+    .querySelectorAll("button");
+  autoCorrectButtons.forEach((btn) => btn.classList.remove("selected"));
+  if (isAutoCorrectOn) {
+    autoCorrectButtons[0].classList.add("selected");
+  } else {
+    autoCorrectButtons[1].classList.add("selected");
+  }
+}
+
+function displaySetting() {
+  applySettingsOnUI();
+  if (isSettingOpen) {
+    // 如果設定已經開啟
     settingCon.classList.remove("open");
-    input.style.visibility = "visible";
-    text.style.visibility = "visible";
+    input.style.opacity = "1";
+    text.style.opacity = "1";
     isSettingOpen = false;
-    input.focus(); // 重新聚焦到輸入框
+    next();
   } else {
     input.blur(); // 失去焦點
     settingCon.classList.add("open");
-    input.style.visibility = "hidden";
-    text.style.visibility = "hidden";
+    input.style.opacity = "0";
+    text.style.opacity = "0";
     isSettingOpen = true;
   }
 }

@@ -42,12 +42,6 @@ body {
 .mainTextCon,
 .mandarinInput {
   color: #777;
-  font-family: "Chiron Hei HK", sans-serif;
-  font-size: 60px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: 5px;
   white-space: nowrap;
   flex-shrink: 0;
   cursor: default;
@@ -67,7 +61,7 @@ body {
   flex-shrink: 0;
 }
 
-button {
+.butCon button {
   width: 176px;
   height: 55px;
   flex-shrink: 0;
@@ -367,11 +361,6 @@ button::after {
   display: inline-block;
 }
 
-.mandarinInput.finished {
-  opacity: 0.2;
-  cursor: not-allowed;
-}
-
 .wordmark {
   position: absolute;
   inset: calc(50% - 300px) auto auto 50%;
@@ -382,7 +371,7 @@ button::after {
 .mainTextCon {
   display: flex;
   position: absolute;
-  inset: calc(50% - 50px) auto auto 50%;
+  inset: calc(50% - 55px) auto auto 50%;
   left: 50%; /* <-- Add this line */
   z-index: 1;
   transform: translateY(-50%);
@@ -393,7 +382,7 @@ button::after {
 
 .mandarinInput {
   position: absolute;
-  inset: calc(50% + 50px) auto auto 50%;
+  inset: calc(50% + 55px) auto auto 50%;
   left: calc(50% - 25px); /* <-- Add this line */
   z-index: 1;
   transform: translateY(-50%);
@@ -414,26 +403,107 @@ button::after {
 
 .settingCon {
   position: absolute;
-  inset: 25% 25% 25% 25%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 1000px;
   height: 450px;
   border-radius: 15px;
-  border: #ec9495 3px solid;
-  color: #f4f3f1;
   padding: 50px;
-  text-wrap: wrap;
-  overflow: scroll;
-  opacity: 1;
+  opacity: 0;
   transition: all 0.15s ease-in;
-  z-index: 1000;
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
-}
-.settingCon::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Opera */
+  z-index: -1000;
+
+  /* layout inside */
+  display: flex;
+  padding-top: 75px;
+  gap: 50px;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .settingCon.open {
   opacity: 1;
   z-index: 1000;
+}
+
+.settingItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 270px;
+  height: max-content;
+  justify-content: space-between;
+}
+
+.settingCon h1 {
+  color: #777;
+  font-family: "Noto Sans TC";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.2px;
+}
+
+.settingCon button {
+  width: 130px;
+  height: 40px;
+  border-radius: 10px;
+  border: #777 2px solid;
+  background-color: rgba(0, 0, 0, 0);
+  color: #777;
+  cursor: pointer;
+}
+
+.settingCon button.selected {
+  background-color: #777;
+  color: #f4f3f1;
+}
+
+.settingCon button.disable {
+  cursor: not-allowed;
+}
+
+.settingCon button.withInput {
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  width: 140px;
+  margin-right: -10px;
+}
+
+.settingCon button.withInput.selected {
+  position: relative;
+  border: #777 2px solid;
+  border-radius: 10px;
+  width: 140px;
+  margin-right: -10px;
+}
+
+.settingCon input {
+  width: 130px;
+  height: 40px;
+  border-radius: 0px 10px 10px 0px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0);
+  color: #777;
+  border: #777 2px solid;
+  border-left: none;
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
