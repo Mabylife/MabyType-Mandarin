@@ -131,24 +131,24 @@ button.fake3d.active {
 button::after {
   position: absolute;
   color: #777;
-  font-family: "Bebas Neue";
+  font-family: "Noto Sans TC";
   font-size: 24px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   top: 75px;
 }
 
 .replayBut::after {
-  content: "replay";
+  content: "重玩";
 }
 
 .nextBut::after {
-  content: "next";
+  content: "下一個";
 }
 
 .settingBut::after {
-  content: "Setting";
+  content: "設定";
 }
 
 .wordmark,
@@ -313,6 +313,7 @@ button::after {
 .footer .info {
   display: flex;
   flex-direction: column;
+
   gap: 10px; /* 增加段落之間的間距 */
 }
 
@@ -327,11 +328,7 @@ button::after {
 
 .info p {
   color: #777;
-  font-family: Khand;
   font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 }
 
 .mandarinInput {
@@ -346,6 +343,7 @@ button::after {
   box-sizing: border-box;
   width: 100%;
   cursor: text;
+  caret-color: #353535;
 }
 
 .char {
@@ -554,7 +552,7 @@ html.settingOpening .resultCon {
 }
 
 .settingBut.settingOn::after {
-  content: "Close";
+  content: "關閉";
 }
 
 .resultCon {
@@ -563,7 +561,7 @@ html.settingOpening .resultCon {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 700px;
-  height: 169px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -571,7 +569,6 @@ html.settingOpening .resultCon {
   align-items: start;
   color: #777;
   flex-shrink: 0;
-  gap: 10px;
   opacity: 0;
   z-index: -1000;
   transition: all 0.15s ease-in;
