@@ -542,7 +542,7 @@ html.settingOpening .nextBut {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 600px;
+  width: 20vw;
   height: 240px;
   flex-shrink: 0;
   background: linear-gradient(
