@@ -140,6 +140,7 @@ function start() {
   if (how2Finish[0] === "onTime") {
     startSecondsTimer(how2Finish[1], finish);
   }
+  document.documentElement.classList.add("inGame");
 }
 
 let timerId = null;
@@ -167,6 +168,7 @@ function stopSecondsTimer() {
 }
 
 function finish() {
+  document.documentElement.classList.remove("inGame");
   isFinished = true;
   console.log("Finish");
   input.blur();
@@ -187,7 +189,8 @@ input.addEventListener("focus", () => {
 });
 
 function startNewGameReset(ifAddText) {
-  input.classList.remove("finished");
+  document.documentElement.classList.remove("inGame");
+  input.style.opacity = "1";
   stopSecondsTimer();
   isStarted = false;
   isFinished = false;
@@ -237,11 +240,11 @@ function replay() {
 }
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Tab") {
+  if (e.key === "Tab" && !isSettingOpen) {
     e.preventDefault(); // 阻止 Tab 鍵的預設行為
     next();
   }
-  if (e.altKey && e.key.toLowerCase() === "r") {
+  if (e.altKey && e.key.toLowerCase() === "r" && !isSettingOpen) {
     e.preventDefault(); // 阻止 Alt + R 的預設行為
     replay();
   }
@@ -336,8 +339,16 @@ function displaySetting() {
     input.style.opacity = "1";
     text.style.opacity = "1";
     isSettingOpen = false;
+    document.getElementById("settingBut").querySelector("img").src =
+      "icons/setting.svg";
+    document.getElementById("settingBut").classList.remove("settingOn");
     next();
+    document.documentElement.classList.remove("settingOpening");
   } else {
+    document.documentElement.classList.add("settingOpening");
+    document.getElementById("settingBut").classList.add("settingOn");
+    document.getElementById("settingBut").querySelector("img").src =
+      "icons/xcircle.svg";
     input.blur(); // 失去焦點
     settingCon.classList.add("open");
     input.style.opacity = "0";

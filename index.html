@@ -109,7 +109,7 @@
       <button class="replayBut fake3d" id="replayBut" onclick="replay()">
         <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
       </button>
-      <button class="nextBut fake3d" id="nextBut" onclick="next()">
+      <button title="Click Tab to quick start" class="nextBut fake3d" id="nextBut" onclick="next()">
         <img id="nextLogo" src="icons/next.svg" alt="next" />
       </button>
     </div>
@@ -121,15 +121,6 @@
           MabyType v1.0.4<br />
           https://mabylife.github.io/mabyType
         </p>
-      </div>
-
-      <div class="altButCon" id="altButCon">
-        <button class="volumnBut" id="volumnBut" onclick="toggleVolumn()">
-          <img id="volumnIcon" src="icons/volumnOn.svg" />
-        </button>
-        <button class="hudBut" id="hudBut" onclick="toggleHud()">
-          <img id="hudIcon" src="icons/hud.svg" />
-        </button>
       </div>
     </div>
 
@@ -147,8 +138,11 @@
       <img class="spinner" src="icons/spinner.svg" alt="" />
     </div>
 
+    <div class="blur blurLeft"></div>
+    <div class="blur blurRight"></div>
+    </div>
+
     <p class="hudTimer hud" id="hudTimer">0s</p>
-    <p class="hudCounter hud" id="hudCounter">0</p>
 
     <script type="module" src="script.js"></script>
   </body>
