@@ -109,37 +109,60 @@
       <button class="replayBut fake3d" id="replayBut" onclick="replay()">
         <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
       </button>
-      <button title="Click Tab to quick start" class="nextBut fake3d" id="nextBut" onclick="next()">
+      <button
+        title="Click Tab to quick start"
+        class="nextBut fake3d"
+        id="nextBut"
+        onclick="next()"
+      >
         <img id="nextLogo" src="icons/next.svg" alt="next" />
       </button>
     </div>
 
-    <div class="footer">
-      <div class="info">
-        <p>
-          Made by Mabylife<br />
-          MabyType v1.0.4<br />
-          https://mabylife.github.io/mabyType
-        </p>
+    <div class="resultCon">
+      <h1 class="nst">每分鐘打字數</h1>
+      <p  id="wpmResult">51.2 / 47</p>
+      <label class="nst">原始結果 / 淨結果</label>
+      <div class="resultItem">
+        <h1 class="nst">評級</h1>
+        <p id="ratingResult">B-</p>
       </div>
-    </div>
-
-    <div class="line"></div>
-
-    <div class="unfocused" id="unfocused">
-      <div class="unfocusedCon">
-        <img src="icons/cursor.png" alt="cursor" />
-        <p>Click here to focus</p>
+      <div class="resultItem">
+        <h1 class="nst">正確</h1>
+        <p id="accuracyResult">98.5%</p>
       </div>
-    </div>
+      <div class="resultItem">
+        <h1 >模式</h1>
+        <p id="modeResult">名言 / 15秒</p>
+      </div>
+      </div>
 
-    <div class="loadingScreen">
-      <img src="icons/MABYTYPE.svg" alt="" />
-      <img class="spinner" src="icons/spinner.svg" alt="" />
-    </div>
+      <div class="footer">
+        <div class="info">
+          <p>
+            Made by Mabylife<br />
+            MabyType v1.0.4<br />
+            https://mabylife.github.io/mabyType
+          </p>
+        </div>
+      </div>
 
-    <div class="blur blurLeft"></div>
-    <div class="blur blurRight"></div>
+      <div class="line"></div>
+
+      <div class="unfocused" id="unfocused">
+        <div class="unfocusedCon">
+          <img src="icons/cursor.png" alt="cursor" />
+          <p>Click here to focus</p>
+        </div>
+      </div>
+
+      <div class="loadingScreen">
+        <img src="icons/MABYTYPE.svg" alt="" />
+        <img class="spinner" src="icons/spinner.svg" alt="" />
+      </div>
+
+      <div class="blur blurLeft"></div>
+      <div class="blur blurRight"></div>
     </div>
 
     <p class="hudTimer hud" id="hudTimer">0s</p>
