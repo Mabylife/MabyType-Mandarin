@@ -371,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", resizeUpdate);
     setTimeout(() => {
       loadingScreen.classList.add("hidden");
-    }, 3000);
+    }, 0);
   });
 });
 

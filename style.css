@@ -43,7 +43,7 @@ body {
 :root {
   --highestLayer: 10000;
   --highLayer: 1000;
-  --hideLater: -10000;
+  --hideLayer: -10000;
   --normalLayer: 10;
 }
 
@@ -164,7 +164,7 @@ button::after {
 
 .loadingScreen.hidden {
   opacity: 0;
-  z-index: var(--hideLater);
+  z-index: var(--hideLayer);
   pointer-events: none;
 }
 
@@ -212,7 +212,7 @@ button::after {
 
 .info p {
   color: #777;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 /* 文字展示&輸入區 */
@@ -303,7 +303,7 @@ button::after {
   padding: 50px;
   opacity: 0;
   transition: all 0.15s ease-in;
-  z-index: var(--hideLater);
+  z-index: var(--hideLayer);
 
   /* layout inside */
   display: flex;
@@ -430,6 +430,11 @@ html.settingOpening .resultCon {
   pointer-events: none;
 }
 
+html.inGame .inGameHud {
+  opacity: 1;
+  z-index: var(--higherLayer);
+}
+
 /* 模糊效果 */
 .blur {
   position: absolute;
@@ -467,7 +472,7 @@ html.settingOpening .resultCon {
   color: #777;
   flex-shrink: 0;
   opacity: 0;
-  z-index: var(--hideLater);
+  z-index: var(--hideLayer);
   transition: all 0.15s ease-in;
   align-content: space-evenly;
 }
@@ -533,4 +538,51 @@ html.settingOpening .resultCon {
 .resultCon.visible {
   opacity: 1;
   z-index: var(--higherLayer);
+}
+
+/* 遊戲中 HUD */
+.inGameHud {
+  position: absolute;
+  top: calc(50% + 20px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  z-index: var(--hideLayer);
+  height: 375px;
+  width: 100px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hudTimer {
+  color: #f4f3f1;
+  font-family: "Noto Sans TC";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.2px;
+  cursor: default;
+}
+
+.inGameHud .hudButCon {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.hudButCon svg {
+  cursor: pointer;
+}
+
+.hudButCon svg path {
+  stroke: #777;
+}
+
+.hudButCon svg:hover path {
+  stroke: #f4f3f1;
 }
