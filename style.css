@@ -27,14 +27,15 @@
 html {
   height: 100vh;
   width: 100vw;
+  min-width: 750px;
+  min-height: 700px;
   overflow: hidden;
-  font-size: 1px;
 }
 
 body {
   position: relative;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   background-color: #353535;
 }
 
@@ -224,6 +225,7 @@ button::after {
 .info p {
   color: #777;
   font-size: 12px;
+  text-align: right;
 }
 
 /* 文字展示&輸入區 */
@@ -279,7 +281,7 @@ button::after {
   inset: calc(50% - 55px) auto auto 50%;
   left: 50%; /* <-- Add this line */
   z-index: var(--normalLayer);
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% - 55px));
   user-select: none;
   overflow: hidden;
   min-width: 400px;
@@ -290,7 +292,7 @@ button::after {
   inset: calc(50% + 55px) auto auto 50%;
   left: calc(50% - 25px); /* <-- Add this line */
   z-index: var(--normalLayer);
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% - 55px));
   min-width: 400px;
   opacity: 1;
 }
@@ -299,7 +301,7 @@ button::after {
   position: absolute;
   inset: calc(50% + 300px) auto auto 50%;
   z-index: var(--normalLayer);
-  transform: translateY(-50%) translateX(-50%);
+  transform: translateY(calc(-50% - 50px)) translateX(-50%);
 }
 
 /* 設定 */
@@ -547,7 +549,7 @@ html.inGame .inGameHud {
 /* 遊戲中 HUD */
 .inGameHud {
   position: absolute;
-  top: calc(50% + 20px);
+  top: calc(50% - 30px);
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -612,6 +614,7 @@ html.inGame .inGameHud {
   border-top: none;
   opacity: 0;
   z-index: var(--hideLayer);
+  animation: slideInToLeft 0.3s forwards;
 }
 
 .highestCon {
@@ -731,6 +734,29 @@ html.inGame .inGameHud {
 .historyCon.open {
   opacity: 1;
   z-index: var(--highestLayer);
+  animation: slideOutFromLeft 0.3s forwards;
+}
+
+@keyframes slideOutFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInToLeft {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 
 .historyTable tr.highest td {

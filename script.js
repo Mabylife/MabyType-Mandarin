@@ -131,9 +131,9 @@ function scrollTheWholeShit() {
     const scrollWidth = typedChar * perScrollWidth;
 
     requestAnimationFrame(() => {
-      text.style.transform = `translateY(-50%) translateX(-${scrollWidth}px)`;
+      text.style.transform = `translateY(calc(-50% - 55px)) translateX(-${scrollWidth}px)`;
       text.style.width = windowWidth / 2 + scrollWidth + "px";
-      input.style.transform = `translateY(-50%) translateX(-${scrollWidth}px)`;
+      input.style.transform = `translateY(calc(-50% - 55px)) translateX(-${scrollWidth}px)`;
       // 防止初始寬度過小
       const textWidth = Math.max(text.getBoundingClientRect().width, 400);
       input.style.width = textWidth + 25 + "px";
@@ -200,6 +200,7 @@ function deleteNoneMandarinChars() {
 }
 
 function startNewGameReset(ifAddText) {
+  historyCon.classList.remove("open");
   document.getElementById("resultCon").classList.remove("visible");
   document.documentElement.classList.remove("inGame");
   input.style.opacity = "1";
@@ -253,8 +254,8 @@ function getResult() {
   const correctChars = document.querySelectorAll(".correct");
   const totalChars = incorrectChars.length + correctChars.length;
   const accuracy = Number(correctChars.length / totalChars) * 100;
-  const wpm = Number((totalChars / totalUsedTime) * 60);
-  const wpmNet = Number((correctChars.length / totalUsedTime) * 60);
+  const wpm = Math.round(Number((totalChars / totalUsedTime) * 60));
+  const wpmNet = Math.round(Number((correctChars.length / totalUsedTime) * 60));
   const resultCon = document.getElementById("resultCon");
 
   // rating
@@ -282,7 +283,7 @@ function getResult() {
   }
 
   // update the values in html
-  document.getElementById("wpmResult").textContent = `${Math.round(wpm)} / ${Math.round(wpmNet)}`;
+  document.getElementById("wpmResult").textContent = `${wpm} / ${wpmNet}`;
   document.getElementById("ratingResult").textContent = ratingChar;
   document.getElementById("accuracyResult").textContent = `${accuracy % 1 === 0 ? accuracy.toFixed(0) : accuracy.toFixed(1)}%`;
   if (isReplay) {
@@ -429,15 +430,18 @@ function data2HistoryTable() {
   let highestIndex = [];
   let highestWpmStr;
 
-  historyRecords.forEach((record) => {
-    if (record.wpm >= highestWpm) {
-      if (record.wpmNet >= highestWpmNet) {
-        highestWpmNet = record.wpmNet;
-        highestWpm = record.wpm;
-        highestIndex.push(historyRecords.indexOf(record));
-      }
+  historyRecords.forEach((record, i) => {
+    record.highest = false; // 初始化最高紀錄標記
+    if (record.wpm > highestWpm || (record.wpm === highestWpm && record.wpmNet > highestWpmNet)) {
+      highestWpm = record.wpm;
+      highestWpmNet = record.wpmNet;
+      highestIndex = [i];
+    } else if (record.wpm === highestWpm && record.wpmNet === highestWpmNet) {
+      highestIndex.push(i);
     }
   });
+
+  // 如果沒有紀錄，則顯示無
   if (highestWpm === 0) {
     highestWpmStr = "無";
   } else {
@@ -498,7 +502,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", resizeUpdate);
     setTimeout(() => {
       loadingScreen.classList.add("hidden");
-    }, 0);
+    }, 2000);
   });
 });
 
