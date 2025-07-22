@@ -12,22 +12,24 @@ const loadingScreen = document.getElementById("loadingScreen");
 const historyCon = document.getElementById("historyCon");
 const historyBut = document.getElementById("historyBut");
 const historyTable = document.getElementById("historyTable");
+const hudTimer = document.getElementById("hudTimer");
 // localStorage
-let textType; // 目前只支援 quote 類型
-let how2Finish; // 預設 30 秒後結束
+let textType;
+let how2Finish;
 let isAutoCorrectOn; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
 let isAutoDeleteUnderlineOn; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
-let historyRecords = []; // 紀錄歷史
+let historyRecords = [];
 // let init
-let textIndex = 5; // 預設顯示 5 個 quote
+let lastElapsedSeconds = -1;
+let textIndex = 5; // 預設一次生 5 個 quote
 let isStarted = false;
 let isFinished = false;
-let windowWidth; // 獲取視窗寬度
+let windowWidth;
 let debounceTimer = null; // 用於防抖
 let lastInputValue = "";
-let isReplay = false; // 是否正在重玩
+let isReplay = false;
 let totalUsedTime;
-let isSettingOpen = false; // 是否設定開啟中
+let isSettingOpen = false;
 let timerId = null;
 // onclick
 window.next = next;
@@ -153,9 +155,6 @@ function start() {
   }
   document.documentElement.classList.add("inGame");
 }
-
-let lastElapsedSeconds = -1; // 用於記錄上一次更新的秒數
-const hudTimer = document.getElementById("hudTimer");
 
 function startSecondsTimer(s, callback) {
   const startTime = performance.now();
