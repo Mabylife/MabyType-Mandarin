@@ -8,6 +8,7 @@ const nextBut = document.getElementById("nextBut");
 const replayBut = document.getElementById("replayBut");
 const settingBut = document.getElementById("settingBut");
 const settingCon = document.getElementById("settingCon");
+const loadingScreen = document.getElementById("loadingScreen");
 
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
@@ -19,13 +20,15 @@ let debounceTimer = null; // 用於防抖
 let isAutoCorrectOn = true; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
 let lastInputValue = "";
 let isReplay = false; // 是否正在重玩
-const isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
+let totalUsedTime;
+let isSettingOpen = false; // 是否設定開啟中
+let isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
+let timerId = null;
+// onclick
 window.next = next;
 window.replay = replay;
 window.setting = setting;
 window.displaySetting = displaySetting;
-
-let isSettingOpen = false;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -136,9 +139,9 @@ function start() {
   document.documentElement.classList.add("inGame");
 }
 
-let timerId = null;
 function startSecondsTimer(s, callback) {
   const startTime = performance.now();
+  check();
   function check() {
     const now = performance.now();
     if (now - startTime >= s * 1000) {
@@ -150,7 +153,6 @@ function startSecondsTimer(s, callback) {
       timerId = requestAnimationFrame(check);
     }
   }
-  check();
 }
 
 function stopSecondsTimer() {
@@ -175,12 +177,6 @@ function deleteNoneMandarinChars() {
   input.value = input.value.replace(/[^\u4e00-\u9fff，。]/g, "");
 }
 
-input.addEventListener("focus", () => {
-  if (isFinished) {
-    input.blur();
-  }
-});
-
 function startNewGameReset(ifAddText) {
   document.getElementById("resultCon").classList.remove("visible");
   document.documentElement.classList.remove("inGame");
@@ -203,20 +199,14 @@ function startNewGameReset(ifAddText) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  startNewGameReset(true);
+function resizeUpdate() {
   windowWidth = window.innerWidth; // 更新視窗寬度
   document.body.style.width = windowWidth + "px"; // 更新 body 寬度
   text.style.width = windowWidth / 2 + "px"; // 更新文字寬度
-  window.addEventListener("resize", () => {
-    windowWidth = window.innerWidth; // 更新視窗寬度
-    document.body.style.width = windowWidth + "px"; // 更新 body 寬度
-    text.style.width = windowWidth / 2 + "px"; // 更新文字寬度
-    requestAnimationFrame(() => {
-      scrollTheWholeShit();
-    });
+  requestAnimationFrame(() => {
+    scrollTheWholeShit();
   });
-});
+}
 
 function next() {
   isReplay = false;
@@ -235,19 +225,6 @@ function replay() {
   replayBut.classList.add("active");
   startNewGameReset(false);
 }
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Tab" && !isSettingOpen) {
-    e.preventDefault(); // 阻止 Tab 鍵的預設行為
-    next();
-  }
-  if (e.altKey && e.key.toLowerCase() === "r" && !isSettingOpen) {
-    e.preventDefault(); // 阻止 Alt + R 的預設行為
-    replay();
-  }
-});
-
-let totalUsedTime;
 
 function getResult() {
   const incorrectChars = document.querySelectorAll(".incorrect");
@@ -353,6 +330,10 @@ function applySettingsOnUI() {
 }
 
 function displaySetting() {
+  setTimeout(() => {
+    settingBut.classList.remove("active");
+  }, 300);
+  settingBut.classList.add("active");
   applySettingsOnUI();
   if (isSettingOpen) {
     // 如果設定已經開啟
@@ -375,3 +356,33 @@ function displaySetting() {
     isSettingOpen = true;
   }
 }
+
+// EventListeners
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Tab" && !isSettingOpen) {
+    e.preventDefault(); // 阻止 Tab 鍵的預設行為
+    next();
+  }
+  if (e.altKey && e.key.toLowerCase() === "r" && !isSettingOpen) {
+    e.preventDefault(); // 阻止 Alt + R 的預設行為
+    replay();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.fonts.ready.then(() => {
+    startNewGameReset(true);
+    resizeUpdate();
+    window.addEventListener("resize", resizeUpdate);
+    setTimeout(() => {
+      loadingScreen.classList.add("hidden");
+    }, 3000);
+  });
+});
+
+input.addEventListener("focus", () => {
+  if (isFinished) {
+    input.blur();
+  }
+});

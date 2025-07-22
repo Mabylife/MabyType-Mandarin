@@ -6,7 +6,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/*字體*/
 .bbn {
   color: #f4f3f1;
   leading-trim: both;
@@ -26,6 +26,7 @@
   font-style: normal;
 }
 
+/*基本*/
 html {
   height: 100vh;
   width: 100vw;
@@ -39,37 +40,26 @@ body {
   background-color: #353535;
 }
 
+/* 變數 */
+:root {
+  --highestLayer: 10000;
+  --highLayer: 1000;
+  --hideLater: -10000;
+  --normalLayer: 10;
+}
+
+/* logo */
 .wordmark {
-  color: #f4f3f1;
-  font-family: "Bebas Neue";
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 24px;
   cursor: default;
+  transition: all 0.2s ease-in;
 }
 
-.mainTextCon,
-.mandarinInput {
-  color: #777;
-  white-space: nowrap;
-  flex-shrink: 0;
-  cursor: default;
-}
-
-.incorrect {
-  color: #ec9495;
-}
-
-.correct {
-  color: #f4f3f1;
-}
-
+/* 按鈕 */
 .butCon {
   display: flex;
   gap: 36px;
   flex-shrink: 0;
+  transition: all 0.2s ease-in;
 }
 
 .butCon button {
@@ -91,7 +81,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  z-index: 3;
+  z-index: var(--normalLayer);
   cursor: pointer;
 }
 
@@ -151,133 +141,11 @@ button::after {
   content: "設定";
 }
 
-.wordmark,
-.butCon {
-  transition: all 0.2s ease-in;
+.settingBut.settingOn::after {
+  content: "關閉";
 }
 
-.unfocused {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -100;
-  display: flex;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  width: 100vw;
-  height: 100vh;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: all 0.2s ease-in;
-  cursor: pointer;
-}
-
-.unfocusedCon {
-  width: max-content;
-  height: 40px;
-  flex-shrink: 0;
-  color: #f4f3f1;
-  font-family: "Bebas Neue";
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 4px;
-  display: flex;
-  gap: 20px;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.unfocusedCon img {
-  width: 32px;
-  height: 32px;
-}
-
-.hud {
-  position: absolute;
-  transition: all 0.2s ease-in;
-  color: #f4f3f1;
-  font-family: Khand;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: 3.2px;
-  opacity: 0;
-}
-
-.hudTimer {
-  bottom: calc(50% + 77px);
-  right: calc(50% + 20px);
-}
-
-.hudCounter {
-  bottom: calc(50% + 77px);
-  left: calc(50% + 20px);
-}
-
-#volumnBut,
-#hudBut {
-  flex-grow: 0;
-  background-color: #777;
-  border: none;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  box-shadow: 0px 10px #494949;
-  transition: all 0.2s ease-in;
-}
-
-.altButCon button img {
-  width: 24px;
-  height: 24px;
-}
-
-.pressed {
-  transform: translateY(5px) !important;
-  background-color: #494949 !important;
-  box-shadow: 0px 5px #3e3e3e !important;
-}
-
-.capsLockWanring {
-  width: 176px;
-  height: 55px;
-  flex-shrink: 0;
-  border: #ec9495 3px solid;
-  position: absolute;
-  border-radius: 15px;
-  top: calc(50% + 60px);
-  right: 50%;
-  transform: translate(50%, 0%);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  color: #ec9495;
-  font-family: "Bebas Neue";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 1.2px;
-  gap: 10px;
-  transition: all 0.2s ease-in;
-  z-index: 2;
-  backdrop-filter: blur(4px);
-  opacity: 0;
-}
-
-.capsLockWanring img {
-  width: 24px;
-  height: 24px;
-  vertical-align: middle;
-}
-
+/* 載入畫面 */
 .loadingScreen {
   position: absolute;
   top: 0;
@@ -289,25 +157,33 @@ button::after {
   gap: 50px;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
-  z-index: -10;
+  background-color: #353535;
+  z-index: var(--highestLayer);
+  opacity: 1;
+  transition: all 0.15s ease-in;
+}
+
+.loadingScreen.hidden {
   opacity: 0;
+  z-index: var(--hideLater);
+  pointer-events: none;
 }
 
 .spinner {
   animation: spin 1s ease-in-out infinite;
 }
 
+/* Footer */
 .footer {
   position: absolute;
   bottom: 30px;
   width: 100%;
-  height: max-content; /* 確保高度固定 */
+  height: max-content;
   display: flex;
-  justify-content: space-between; /* 左右對齊 */
-  align-items: end; /* 垂直居中 */
-  padding: 0 30px 0 30px; /* 增加內邊距 */
-  z-index: 10; /* 確保 footer 在最上層 */
+  justify-content: space-between;
+  align-items: end;
+  padding: 0 30px 0 30px;
+  z-index: var(--highestLayer);
 }
 
 .footer .info {
@@ -331,6 +207,24 @@ button::after {
   font-size: 16px;
 }
 
+/* 文字展示&輸入區 */
+.mainTextCon,
+.mandarinInput {
+  color: #777;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: default;
+  will-change: transform;
+}
+
+.incorrect {
+  color: #ec9495;
+}
+
+.correct {
+  color: #f4f3f1;
+}
+
 .mandarinInput {
   padding: 25px;
   text-align: left;
@@ -352,10 +246,11 @@ button::after {
   display: inline-block;
 }
 
+/*排版*/
 .wordmark {
   position: absolute;
   inset: calc(50% - 300px) auto auto 50%;
-  z-index: 1;
+  z-index: var(--normalLayer);
   transform: translateY(-50%) translateX(-50%);
 }
 
@@ -364,7 +259,7 @@ button::after {
   position: absolute;
   inset: calc(50% - 55px) auto auto 50%;
   left: 50%; /* <-- Add this line */
-  z-index: 1;
+  z-index: var(--normalLayer);
   transform: translateY(-50%);
   user-select: none;
   overflow: hidden;
@@ -375,7 +270,7 @@ button::after {
   position: absolute;
   inset: calc(50% + 55px) auto auto 50%;
   left: calc(50% - 25px); /* <-- Add this line */
-  z-index: 1;
+  z-index: var(--normalLayer);
   transform: translateY(-50%);
   min-width: 400px;
   opacity: 1;
@@ -384,15 +279,11 @@ button::after {
 .butCon {
   position: absolute;
   inset: calc(50% + 300px) auto auto 50%;
-  z-index: 1;
+  z-index: var(--normalLayer);
   transform: translateY(-50%) translateX(-50%);
 }
 
-#text,
-#input {
-  will-change: transform;
-}
-
+/* 設定 */
 .settingCon {
   position: absolute;
   left: 50%;
@@ -404,7 +295,7 @@ button::after {
   padding: 50px;
   opacity: 0;
   transition: all 0.15s ease-in;
-  z-index: -1000;
+  z-index: var(--hideLater);
 
   /* layout inside */
   display: flex;
@@ -419,7 +310,7 @@ button::after {
 
 .settingCon.open {
   opacity: 1;
-  z-index: 1000;
+  z-index: var(--higherLayer);
 }
 
 .settingItem {
@@ -490,15 +381,14 @@ button::after {
   outline: none;
 }
 
-/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
+  /* Chrome, Safari, Edge, Opera */
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* Firefox */
 input[type="number"] {
+  /* Firefox */
   -moz-appearance: textfield;
 }
 
@@ -517,6 +407,7 @@ input[type="number"] {
   margin-left: 5px;
 }
 
+/* 遊戲中 */
 html.inGame .butCon {
   opacity: 0;
 }
@@ -531,6 +422,7 @@ html.settingOpening .resultCon {
   pointer-events: none;
 }
 
+/* 模糊效果 */
 .blur {
   position: absolute;
   top: 50%;
@@ -539,7 +431,7 @@ html.settingOpening .resultCon {
   height: 240px;
   flex-shrink: 0;
   background: linear-gradient(90deg, rgba(53, 53, 53, 0) 0%, rgba(53, 53, 53, 0.75) 50%, #353535 75%, #353535 100%);
-  z-index: 2000;
+  z-index: var(--higherLayer);
 }
 
 .blurRight {
@@ -551,10 +443,7 @@ html.settingOpening .resultCon {
   transform: translateY(-50%) rotateY(180deg);
 }
 
-.settingBut.settingOn::after {
-  content: "關閉";
-}
-
+/* 成績 */
 .resultCon {
   position: absolute;
   top: 50%;
@@ -570,7 +459,7 @@ html.settingOpening .resultCon {
   color: #777;
   flex-shrink: 0;
   opacity: 0;
-  z-index: -1000;
+  z-index: var(--hideLater);
   transition: all 0.15s ease-in;
   align-content: space-evenly;
 }
@@ -635,5 +524,5 @@ html.settingOpening .resultCon {
 
 .resultCon.visible {
   opacity: 1;
-  z-index: 1000;
+  z-index: var(--higherLayer);
 }

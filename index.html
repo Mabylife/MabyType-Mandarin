@@ -4,124 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Maby Typing</title>
-    <meta
-      name="description"
-      content="MabyType, a simple typing test game to improve your typing speed and accuracy."
-    />
-    <meta
-      name="keywords"
-      content="typing, typing test, typing game, speed typing, accuracy typing, typing prectice"
-    />
+    <meta name="description" content="MabyType, a simple typing test game to improve your typing speed and accuracy." />
+    <meta name="keywords" content="typing, typing test, typing game, speed typing, accuracy typing, typing prectice" />
     <meta name="author" content="Mabylife" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon shortcut" href="favicon.ico" />
   </head>
   <body>
-    <img src="icons/wordmarkM.svg" id="wordmark" class="wordmark">
+    <img src="icons/wordmarkM.svg" id="wordmark" class="wordmark" />
     <div class="settingCon" id="settingCon">
       <div class="settingItem" id="timeSetting">
         <h1 class="settingName nst">計時時間</h1>
-        <div style="width: 100px;"></div>
-        <button class="settingOption nst" onclick="setting('time', 30)">
-          30秒
-        </button>
-        <button class="settingOption nst" onclick="setting('time', 60)">
-          60秒
-        </button>
-        <button
-          class="settingOption withInput nst"
-          onclick="setting('time', document.getElementById('customTime').value)"
-        >
-          自訂
-        </button>
-        <input
-          class="settingInput nst"
-          type="number"
-          id="customTime"
-          value="90"
-          min="1"
-          oninput="setting('time', document.getElementById('customTime').value)"
-        />
+        <div style="width: 100px"></div>
+        <button class="settingOption nst" onclick="setting('time', 30)">30秒</button>
+        <button class="settingOption nst" onclick="setting('time', 60)">60秒</button>
+        <button class="settingOption withInput nst" onclick="setting('time', document.getElementById('customTime').value)">自訂</button>
+        <input class="settingInput nst" type="number" id="customTime" value="90" min="1" oninput="setting('time', document.getElementById('customTime').value)" />
       </div>
       <div class="settingItem" id="textTypeSetting">
         <h1 class="settingName nst">文字類型</h1>
-        <div style="width: 100px;"></div>
-        <button
-          class="settingOption nst"
-          onclick="setting('textType', 'quote')"
-        >
-          名言
-        </button>
+        <div style="width: 100px"></div>
+        <button class="settingOption nst" onclick="setting('textType', 'quote')">名言</button>
         <button class="settingOption disable nst">敬請期待</button>
       </div>
       <div class="settingItem" id="autoDeleteUnderlineSetting">
         <h1 class="settingName nst">自動消除底線</h1>
-        <div style="width: 50px;"></div>
-        <button
-          class="settingOption nst"
-          onclick="setting('autoDeleteUnderline', true)"
-        >
-          ON
-        </button>
-        <button
-          class="settingOption disable nst disable"
-          onclick="setting('autoDeleteUnderline', false)"
-        >
-          OFF
-        </button>
+        <div style="width: 50px"></div>
+        <button class="settingOption nst" onclick="setting('autoDeleteUnderline', true)">ON</button>
+        <button class="settingOption disable nst disable" onclick="setting('autoDeleteUnderline', false)">OFF</button>
       </div>
-      <div
-        class="settingItem"
-        style="margin-top: 50px;"
-        id="autoCorrectSetting"
-      >
+      <div class="settingItem" style="margin-top: 50px" id="autoCorrectSetting">
         <h1 class="settingName nst">自動選字</h1>
-        <div style="width: 100px;"></div>
-        <button
-          class="settingOption nst"
-          onclick="setting('autoCorrect', true)"
-        >
-          ON
-        </button>
-        <button
-          class="settingOption nst"
-          onclick="setting('autoCorrect', false)"
-        >
-          OFF
-        </button>
+        <div style="width: 100px"></div>
+        <button class="settingOption nst" onclick="setting('autoCorrect', true)">ON</button>
+        <button class="settingOption nst" onclick="setting('autoCorrect', false)">OFF</button>
       </div>
     </div>
     <p class="mainTextCon nst" id="text"></p>
-    <input
-      type="text"
-      class="mandarinInput nst"
-      id="input"
-      autocomplete="off"
-    />
+    <input type="text" class="mandarinInput nst" id="input" autocomplete="off" />
     <div class="butCon">
-      <button
-        class="settingBut fake3d"
-        id="settingBut"
-        onclick="displaySetting()"
-      >
+      <button class="settingBut fake3d" id="settingBut" onclick="displaySetting()">
         <img id="settingLogo" src="icons/setting.svg" alt="setting" />
       </button>
       <button class="replayBut fake3d" id="replayBut" onclick="replay()">
         <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
       </button>
-      <button
-        title="Click Tab to quick start"
-        class="nextBut fake3d"
-        id="nextBut"
-        onclick="next()"
-      >
+      <button title="Click Tab to quick start" class="nextBut fake3d" id="nextBut" onclick="next()">
         <img id="nextLogo" src="icons/next.svg" alt="next" />
       </button>
     </div>
 
     <div class="resultCon" id="resultCon">
       <h1 class="nst">每分鐘打字數</h1>
-      <p  id="wpmResult"></p>
+      <p id="wpmResult"></p>
       <h1 class="nst">原始結果 / 淨結果</h1>
       <div class="resultItem">
         <h1 class="nst">評級</h1>
@@ -132,40 +67,30 @@
         <p id="accuracyResult"></p>
       </div>
       <div class="resultItem">
-        <h1 >模式</h1>
+        <h1>模式</h1>
         <p id="modeResult"></p>
       </div>
-      </div>
-
-      <div class="footer">
-        <div class="info">
-          <p class="nst">
-            Made by 馬比Maby<br />
-            MabyType正體中文 v1.0<br />
-            https://mabylife.github.io/mabyType
-          </p>
-        </div>
-      </div>
-
-      <div class="line"></div>
-
-      <div class="unfocused" id="unfocused">
-        <div class="unfocusedCon">
-          <img src="icons/cursor.png" alt="cursor" />
-          <p>Click here to focus</p>
-        </div>
-      </div>
-
-      <div class="loadingScreen">
-        <img src="icons/MABYTYPE.svg" alt="" />
-        <img class="spinner" src="icons/spinner.svg" alt="" />
-      </div>
-
-      <div class="blur blurLeft"></div>
-      <div class="blur blurRight"></div>
     </div>
 
-    <p class="hudTimer hud" id="hudTimer">0s</p>
+    <div class="footer">
+      <div class="info">
+        <p class="nst">
+          Made by 馬比Maby<br />
+          MabyType正體中文 v1.0<br />
+          https://mabylife.github.io/mabyType
+        </p>
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="loadingScreen" id="loadingScreen">
+      <img src="icons/wordmarkM.svg" alt="" />
+      <img class="spinner" src="icons/spinner.svg" alt="" />
+    </div>
+
+    <div class="blur blurLeft"></div>
+    <div class="blur blurRight"></div>
 
     <script type="module" src="script.js"></script>
   </body>
