@@ -44,7 +44,6 @@ body {
   --highLayer: 1000;
   --hideLayer: -10000;
   --normalLayer: 10;
-  --accentColor: rgb(222, 167, 0);
 }
 
 /* logo */
@@ -735,5 +734,5 @@ html.inGame .inGameHud {
 }
 
 .historyTable tr.highest td {
-  color: var(--accentColor);
+  text-decoration: underline;
 }
