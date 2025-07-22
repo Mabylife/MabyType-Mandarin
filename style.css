@@ -28,6 +28,7 @@ html {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  font-size: 1px;
 }
 
 body {
@@ -43,6 +44,7 @@ body {
   --highLayer: 1000;
   --hideLayer: -10000;
   --normalLayer: 10;
+  --accentColor: rgb(222, 167, 0);
 }
 
 /* logo */
@@ -182,20 +184,20 @@ button::after {
 /* Footer */
 .footer {
   position: absolute;
-  bottom: 30px;
+  bottom: 0px;
   width: 100%;
-  height: max-content;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: end;
-  padding: 0 30px 0 30px;
+  padding: 30px;
+  padding-top: 0px;
   z-index: var(--highestLayer);
 }
 
 .footer .info {
   display: flex;
   flex-direction: column;
-
   gap: 10px; /* 增加段落之間的間距 */
 }
 
@@ -206,6 +208,18 @@ button::after {
   align-items: end;
   justify-content: space-around;
   gap: 20px; /* 按鈕之間的間距 */
+}
+
+.footer .historyBut {
+  color: #777;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+  user-select: none;
+}
+
+.footer .historyBut:hover {
+  color: #f4f3f1;
 }
 
 .info p {
@@ -576,4 +590,150 @@ html.inGame .inGameHud {
 
 .hudButCon svg:hover path {
   stroke: #f4f3f1;
+}
+
+/* 歷史紀錄 */
+.historyCon {
+  position: absolute;
+  width: auto;
+  min-width: 500px;
+  height: calc(100vh - 100px);
+  bottom: 100px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  gap: 50px;
+  justify-content: start;
+  align-items: start;
+  background-color: #353535;
+  border-radius: 0 0 15px 0;
+  border: #777 2px solid;
+  border-left: none;
+  border-top: none;
+  opacity: 0;
+  z-index: var(--hideLayer);
+}
+
+.highestCon {
+  height: max-content;
+  width: 100%;
+}
+
+.highestCon .highestWpm {
+  color: #f4f3f1;
+  font-family: "Bebas Neue";
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 3.2px;
+}
+
+.historyCon h1 {
+  color: #777;
+  font-family: "Noto Sans TC";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.2px;
+}
+
+.historyTitle {
+  margin-bottom: -20px;
+}
+
+.highestWpm::after {
+  content: "原始結果 / 淨結果";
+  color: #777;
+  font-family: "Noto Sans TC";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.75px;
+  margin-left: 20px;
+}
+
+.tableCon {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 100;
+  gap: 30px;
+  z-index: var(--highestLayer);
+  overflow-y: auto;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  border-radius: 0 0 15px 15px;
+}
+
+.historyTable::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  height: max-content;
+  max-height: 100%;
+}
+
+.historyTable th {
+  text-align: left;
+  color: #777;
+  font-family: "Noto Sans TC";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-bottom: 20px;
+}
+
+.historyTable th:first-child {
+  opacity: 0.5;
+}
+
+.historyTable td {
+  color: #f4f3f1;
+  font-family: "Noto Sans TC";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -1.2px;
+  padding-bottom: 15px;
+}
+
+.historyTable td:first-child {
+  color: #777;
+  opacity: 0.5;
+}
+
+.historyTable td,
+.historyTable th {
+  padding-right: 50px;
+  width: max-content;
+  white-space: nowrap;
+}
+.historyTable td:last-child {
+  padding-right: 0;
+}
+
+.historyTable thead {
+  position: sticky;
+  top: 0;
+  background: #353535; /* 建議加背景色避免透明 */
+  z-index: 2;
+}
+
+.historyCon.open {
+  opacity: 1;
+  z-index: var(--highestLayer);
+}
+
+.historyTable tr.highest td {
+  color: var(--accentColor);
 }

@@ -9,13 +9,15 @@ const replayBut = document.getElementById("replayBut");
 const settingBut = document.getElementById("settingBut");
 const settingCon = document.getElementById("settingCon");
 const loadingScreen = document.getElementById("loadingScreen");
+const historyCon = document.getElementById("historyCon");
+const historyBut = document.getElementById("historyBut");
+const historyTable = document.getElementById("historyTable");
 // localStorage
 let textType; // 目前只支援 quote 類型
 let how2Finish; // 預設 30 秒後結束
 let isAutoCorrectOn; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
 let isAutoDeleteUnderlineOn; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
 let historyRecords = []; // 紀錄歷史
-let playedCount = 0; // 紀錄已經玩過的次數
 // let init
 let textIndex = 5; // 預設顯示 5 個 quote
 let isStarted = false;
@@ -32,6 +34,7 @@ window.next = next;
 window.replay = replay;
 window.setting = setting;
 window.displaySetting = displaySetting;
+window.displayHistoryCon = displayHistoryCon;
 
 function tmp2LocalStorage() {
   // 儲存數據
@@ -39,7 +42,6 @@ function tmp2LocalStorage() {
   localStorage.setItem("storage_autoDeleteUnderline", isAutoDeleteUnderlineOn);
   localStorage.setItem("storage_textType", textType);
   localStorage.setItem("storage_how2Finish", JSON.stringify(how2Finish));
-  localStorage.setItem("storage_playedCount", playedCount);
   localStorage.setItem("historyRecords", JSON.stringify(historyRecords));
 }
 
@@ -49,7 +51,6 @@ function localStorage2Tmp() {
   isAutoDeleteUnderlineOn = localStorage.getItem("storage_autoDeleteUnderline") !== null ? JSON.parse(localStorage.getItem("storage_autoDeleteUnderline")) : true;
   textType = localStorage.getItem("storage_textType") !== null ? localStorage.getItem("storage_textType") : "quote";
   how2Finish = localStorage.getItem("storage_how2Finish") !== null ? JSON.parse(localStorage.getItem("storage_how2Finish")) : ["onTime", 30];
-  playedCount = localStorage.getItem("storage_playedCount") !== null ? parseInt(localStorage.getItem("storage_playedCount")) : 0;
   historyRecords = localStorage.getItem("historyRecords") !== null ? JSON.parse(localStorage.getItem("historyRecords")) : [];
 }
 
@@ -297,9 +298,7 @@ function getResult() {
 
   // store to localStorage
   if (!isReplay && accuracy >= 90) {
-    playedCount++;
     const record = {
-      id: playedCount,
       wpm: Math.round(wpm),
       wpmNet: Math.round(wpmNet),
       ratingChar: ratingChar,
@@ -407,6 +406,75 @@ function displaySetting() {
     text.style.opacity = "0";
     isSettingOpen = true;
   }
+}
+
+function displayHistoryCon() {
+  applySettingsOnUI();
+  if (historyCon.classList.contains("open")) {
+    // 如果練習紀錄已經開啟
+    historyCon.classList.remove("open");
+    historyTable.innerHTML = ""; // 清空歷史紀錄表格
+    historyBut.textContent = "練習紀錄";
+  } else {
+    data2HistoryTable(); // 將歷史紀錄數據轉換為表格
+    historyCon.classList.add("open");
+    historyBut.textContent = "關閉練習紀錄";
+  }
+}
+
+function data2HistoryTable() {
+  // 找出最高的 wpm 及其對應的 wpmNet
+  let highestWpm = 0;
+  let highestWpmNet = 0;
+  let highestIndex = [];
+  let highestWpmStr;
+
+  historyRecords.forEach((record) => {
+    if (record.wpm >= highestWpm) {
+      if (record.wpmNet >= highestWpmNet) {
+        highestWpmNet = record.wpmNet;
+        highestWpm = record.wpm;
+        highestIndex.push(historyRecords.indexOf(record));
+      }
+    }
+  });
+  if (highestWpm === 0) {
+    highestWpmStr = "無";
+  } else {
+    highestIndex.forEach((i) => {
+      historyRecords[i].highest = true; // 標記為最高紀錄
+    });
+    highestWpmStr = `${highestWpm} / ${highestWpmNet}`;
+  }
+
+  document.getElementById("highestWpm").textContent = highestWpmStr;
+
+  historyTable.innerHTML = ""; // 清空歷史紀錄表格
+  if (historyRecords.length === 0) {
+    historyTable.innerHTML = "<tr><td colspan='4'>沒有練習紀錄</td></tr>";
+    return;
+  }
+
+  // 添加表頭
+  const headerRow = document.createElement("tr");
+  const theader = document.createElement("thead");
+  headerRow.innerHTML = "<th>編號</th><th>WPM</th><th>評級</th><th>模式</th><th>時間</th>";
+  theader.appendChild(headerRow);
+  historyTable.appendChild(theader);
+
+  // 添加每條紀錄
+  historyRecords
+    .slice()
+    .reverse()
+    .forEach((record, i) => {
+      const row = document.createElement("tr");
+      const index = historyRecords.length - i;
+      row.innerHTML = `<td>${index}</td><td>${record.wpm} / ${record.wpmNet}</td><td>${record.ratingChar}</td><td>${record.mode}</td><td>${record.time}</td>`;
+      if (record.highest === true) {
+        row.classList.add("highest");
+      }
+      historyTable.appendChild(row);
+    });
 }
 
 // EventListeners
