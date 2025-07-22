@@ -8,8 +8,6 @@
 /*字體*/
 .bbn {
   color: #f4f3f1;
-  leading-trim: both;
-  text-edge: cap;
   font-family: "Bebas Neue";
   font-size: 24px;
   font-style: normal;
@@ -357,7 +355,7 @@ button::after {
   color: #f4f3f1;
 }
 
-.settingCon button.disable { 
+.settingCon button.disable {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -404,8 +402,6 @@ input[type="number"] {
 #autoCorrectSetting h1::after {
   content: "BETA";
   color: #777;
-  leading-trim: both;
-  text-edge: cap;
   font-family: "Noto Sans TC";
   font-size: 10px;
   font-style: normal;
@@ -497,16 +493,6 @@ html.inGame .inGameHud {
   transform: translateX(-5px);
 }
 
-.resultCon label {
-  color: #777;
-  font-family: "Noto Sans TC";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0.75px;
-}
-
 .resultItem {
   width: auto;
   display: flex;
@@ -514,6 +500,11 @@ html.inGame .inGameHud {
   gap: 20px;
   align-items: end;
   justify-content: end;
+}
+
+.resultItem img {
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
 .resultItem h1 {
@@ -537,7 +528,7 @@ html.inGame .inGameHud {
 
 .resultCon.visible {
   opacity: 1;
-  z-index: var(--higherLayer);
+  z-index: var(--highestLayer);
 }
 
 /* 遊戲中 HUD */
