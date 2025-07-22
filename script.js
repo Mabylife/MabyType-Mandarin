@@ -87,7 +87,6 @@ function checkAnswer() {
 }
 
 function addText() {
-  console.log("Add text");
   if (textType === "quote") {
     for (let i = 0; i < textIndex; i++) {
       const newQuote = mQuotes[randomNumber(0, mQuotes.length - 1)];
@@ -125,7 +124,6 @@ function scrollTheWholeShit() {
 }
 
 function start() {
-  console.log("Start");
   isStarted = true;
   if (how2Finish[0] === "onTime") {
     startSecondsTimer(how2Finish[1], finish);
@@ -133,14 +131,22 @@ function start() {
   document.documentElement.classList.add("inGame");
 }
 
+let lastElapsedSeconds = -1; // 用於記錄上一次更新的秒數
+const hudTimer = document.getElementById("hudTimer");
+
 function startSecondsTimer(s, callback) {
   const startTime = performance.now();
   check();
   function check() {
     const now = performance.now();
+    const elapsedSeconds = Math.floor((now - startTime) / 1000);
+    // 每到一個整數秒數的時候 更新hud
+    if (elapsedSeconds !== lastElapsedSeconds) {
+      hudTimer.textContent = s - elapsedSeconds;
+      lastElapsedSeconds = elapsedSeconds;
+    }
     if (now - startTime >= s * 1000) {
       totalUsedTime = (now - startTime) / 1000;
-      console.log(`實際總用時: ${totalUsedTime} 秒`);
       callback();
       timerId = null;
     } else {
@@ -159,7 +165,6 @@ function stopSecondsTimer() {
 function finish() {
   document.documentElement.classList.remove("inGame");
   isFinished = true;
-  console.log("Finish");
   input.blur();
   input.style.opacity = "0.2";
   deleteNoneMandarinChars();
