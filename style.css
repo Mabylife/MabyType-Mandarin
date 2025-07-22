@@ -303,7 +303,6 @@ button::after {
   transition: all 0.15s ease-in;
   z-index: var(--hideLayer);
 
-  /* layout inside */
   display: flex;
   padding-top: 75px;
   gap: 50px;
@@ -491,7 +490,7 @@ html.inGame .inGameHud {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  transform: translateX(-5px);
+  transform: translateX(-2px);
 }
 
 .resultItem {

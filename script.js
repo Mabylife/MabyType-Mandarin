@@ -14,6 +14,8 @@ let textType; // 目前只支援 quote 類型
 let how2Finish; // 預設 30 秒後結束
 let isAutoCorrectOn; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
 let isAutoDeleteUnderlineOn; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
+let historyRecords = []; // 紀錄歷史
+let playedCount = 0; // 紀錄已經玩過的次數
 // let init
 let textIndex = 5; // 預設顯示 5 個 quote
 let isStarted = false;
@@ -30,6 +32,26 @@ window.next = next;
 window.replay = replay;
 window.setting = setting;
 window.displaySetting = displaySetting;
+
+function tmp2LocalStorage() {
+  // 儲存數據
+  localStorage.setItem("storage_autoCorrect", isAutoCorrectOn);
+  localStorage.setItem("storage_autoDeleteUnderline", isAutoDeleteUnderlineOn);
+  localStorage.setItem("storage_textType", textType);
+  localStorage.setItem("storage_how2Finish", JSON.stringify(how2Finish));
+  localStorage.setItem("storage_playedCount", playedCount);
+  localStorage.setItem("historyRecords", JSON.stringify(historyRecords));
+}
+
+function localStorage2Tmp() {
+  // 讀取數據，若本地沒有則用預設值
+  isAutoCorrectOn = localStorage.getItem("storage_autoCorrect") !== null ? JSON.parse(localStorage.getItem("storage_autoCorrect")) : true;
+  isAutoDeleteUnderlineOn = localStorage.getItem("storage_autoDeleteUnderline") !== null ? JSON.parse(localStorage.getItem("storage_autoDeleteUnderline")) : true;
+  textType = localStorage.getItem("storage_textType") !== null ? localStorage.getItem("storage_textType") : "quote";
+  how2Finish = localStorage.getItem("storage_how2Finish") !== null ? JSON.parse(localStorage.getItem("storage_how2Finish")) : ["onTime", 30];
+  playedCount = localStorage.getItem("storage_playedCount") !== null ? parseInt(localStorage.getItem("storage_playedCount")) : 0;
+  historyRecords = localStorage.getItem("historyRecords") !== null ? JSON.parse(localStorage.getItem("historyRecords")) : [];
+}
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -272,6 +294,36 @@ function getResult() {
   resultCon.classList.add("visible");
   text.style.opacity = "0";
   input.style.opacity = "0";
+
+  // store to localStorage
+  if (!isReplay && accuracy >= 90) {
+    playedCount++;
+    const record = {
+      id: playedCount,
+      wpm: Math.round(wpm),
+      wpmNet: Math.round(wpmNet),
+      ratingChar: ratingChar,
+      mode: `名言 / ${how2Finish[1]} 秒`,
+      time: getCurrentTimeString(),
+    };
+
+    // 新增紀錄
+    historyRecords.push(record);
+
+    // 儲存回 localStorage
+    localStorage.setItem("historyRecords", JSON.stringify(historyRecords));
+  }
+  console.log("歷史紀錄:", historyRecords);
+}
+
+function getCurrentTimeString() {
+  const now = new Date();
+  const yy = String(now.getFullYear()).slice(2);
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const hh = String(now.getHours()).padStart(2, "0");
+  const min = String(now.getMinutes()).padStart(2, "0");
+  return `${yy}/${mm}/${dd}/${hh}:${min}`;
 }
 
 function setting(setting, value) {
@@ -355,22 +407,6 @@ function displaySetting() {
     text.style.opacity = "0";
     isSettingOpen = true;
   }
-}
-
-function tmp2LocalStorage() {
-  // 儲存數據
-  localStorage.setItem("setting_autoCorrect", isAutoCorrectOn);
-  localStorage.setItem("setting_autoDeleteUnderline", isAutoDeleteUnderlineOn);
-  localStorage.setItem("setting_textType", textType);
-  localStorage.setItem("setting_how2Finish", JSON.stringify(how2Finish));
-}
-
-function localStorage2Tmp() {
-  // 讀取數據，若本地沒有則用預設值
-  isAutoCorrectOn = localStorage.getItem("setting_autoCorrect") !== null ? JSON.parse(localStorage.getItem("setting_autoCorrect")) : true;
-  isAutoDeleteUnderlineOn = localStorage.getItem("setting_autoDeleteUnderline") !== null ? JSON.parse(localStorage.getItem("setting_autoDeleteUnderline")) : true;
-  textType = localStorage.getItem("setting_textType") !== null ? localStorage.getItem("setting_textType") : "quote";
-  how2Finish = localStorage.getItem("setting_how2Finish") !== null ? JSON.parse(localStorage.getItem("setting_how2Finish")) : ["onTime", 30];
 }
 
 // EventListeners
