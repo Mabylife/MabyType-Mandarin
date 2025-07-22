@@ -9,20 +9,21 @@ const replayBut = document.getElementById("replayBut");
 const settingBut = document.getElementById("settingBut");
 const settingCon = document.getElementById("settingCon");
 const loadingScreen = document.getElementById("loadingScreen");
+// localStorage
+let textType; // 目前只支援 quote 類型
+let how2Finish; // 預設 30 秒後結束
+let isAutoCorrectOn; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
+let isAutoDeleteUnderlineOn; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
 // let init
-let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
-let how2Finish = ["onTime", 30]; // 預設 30 秒後結束
 let isStarted = false;
 let isFinished = false;
 let windowWidth; // 獲取視窗寬度
 let debounceTimer = null; // 用於防抖
-let isAutoCorrectOn = true; // 是否啟用宇宙霹靂無敵貼心之自動選字 (optional)
 let lastInputValue = "";
 let isReplay = false; // 是否正在重玩
 let totalUsedTime;
 let isSettingOpen = false; // 是否設定開啟中
-let isAutoDeleteUnderlineOn = true; // 是否啟用宇宙霹靂無敵貼心之自動刪除底線 (unable to disable for now)
 let timerId = null;
 // onclick
 window.next = next;
@@ -284,6 +285,7 @@ function setting(setting, value) {
     isAutoCorrectOn = value;
   }
   applySettingsOnUI();
+  tmp2LocalStorage(); // 儲存設定到 localStorage
 }
 
 function applySettingsOnUI() {
@@ -355,6 +357,22 @@ function displaySetting() {
   }
 }
 
+function tmp2LocalStorage() {
+  // 儲存數據
+  localStorage.setItem("setting_autoCorrect", isAutoCorrectOn);
+  localStorage.setItem("setting_autoDeleteUnderline", isAutoDeleteUnderlineOn);
+  localStorage.setItem("setting_textType", textType);
+  localStorage.setItem("setting_how2Finish", JSON.stringify(how2Finish));
+}
+
+function localStorage2Tmp() {
+  // 讀取數據，若本地沒有則用預設值
+  isAutoCorrectOn = localStorage.getItem("setting_autoCorrect") !== null ? JSON.parse(localStorage.getItem("setting_autoCorrect")) : true;
+  isAutoDeleteUnderlineOn = localStorage.getItem("setting_autoDeleteUnderline") !== null ? JSON.parse(localStorage.getItem("setting_autoDeleteUnderline")) : true;
+  textType = localStorage.getItem("setting_textType") !== null ? localStorage.getItem("setting_textType") : "quote";
+  how2Finish = localStorage.getItem("setting_how2Finish") !== null ? JSON.parse(localStorage.getItem("setting_how2Finish")) : ["onTime", 30];
+}
+
 // EventListeners
 
 document.addEventListener("keydown", (e) => {
@@ -370,6 +388,7 @@ document.addEventListener("keydown", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.fonts.ready.then(() => {
+    localStorage2Tmp(); // 讀取本地存儲的設定
     startNewGameReset(true);
     resizeUpdate();
     window.addEventListener("resize", resizeUpdate);
