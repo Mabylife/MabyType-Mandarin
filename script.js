@@ -1,6 +1,5 @@
 import { char2phonetic } from "./pre_made_datas/char2phonetic.js";
 import { mQuotes } from "./pre_made_datas/mQuotes.js";
-console.log("script.js loaded");
 
 // const init
 const input = document.getElementById("input");
