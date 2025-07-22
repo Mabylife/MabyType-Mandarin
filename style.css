@@ -318,7 +318,7 @@ button::after {
 
 .settingCon.open {
   opacity: 1;
-  z-index: var(--higherLayer);
+  z-index: var(--highestLayer);
 }
 
 .settingItem {
@@ -357,7 +357,7 @@ button::after {
   color: #f4f3f1;
 }
 
-.settingCon button.disable {
+.settingCon button.disable { 
   cursor: not-allowed;
   opacity: 0.5;
 }
