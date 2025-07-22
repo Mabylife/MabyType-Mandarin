@@ -2,6 +2,7 @@ import { char2phonetic } from "./pre_made_datas/char2phonetic.js";
 import { mQuotes } from "./pre_made_datas/mQuotes.js";
 console.log("script.js loaded");
 
+// const init
 const input = document.getElementById("input");
 const text = document.getElementById("text");
 const nextBut = document.getElementById("nextBut");
@@ -9,7 +10,7 @@ const replayBut = document.getElementById("replayBut");
 const settingBut = document.getElementById("settingBut");
 const settingCon = document.getElementById("settingCon");
 const loadingScreen = document.getElementById("loadingScreen");
-
+// let init
 let textType = "quote"; // 目前只支援 quote 類型
 let textIndex = 5; // 預設顯示 5 個 quote
 let how2Finish = ["onTime", 30]; // 預設 30 秒後結束
@@ -33,13 +34,6 @@ window.displaySetting = displaySetting;
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-input.addEventListener("input", () => {
-  if (debounceTimer) clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    checkAnswer();
-  }, 0);
-});
 
 function checkAnswer() {
   let inputValue = (input.value.match(/[\u4e00-\u9fff，。]/g) || []).join("").trim();
@@ -385,4 +379,11 @@ input.addEventListener("focus", () => {
   if (isFinished) {
     input.blur();
   }
+});
+
+input.addEventListener("input", () => {
+  if (debounceTimer) clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    checkAnswer();
+  }, 0);
 });
