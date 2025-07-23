@@ -43,7 +43,7 @@ body {
 /* 變數 */
 :root {
   --highestLayer: 10000;
-  --highLayer: 1000;
+  --higherLayer: 1000;
   --hideLayer: -10000;
   --normalLayer: 10;
 }
@@ -453,7 +453,7 @@ html.inGame .inGameHud {
   top: 50%;
   transform: translateY(-50%);
   width: 20vw;
-  height: 240px;
+  height: 300px;
   flex-shrink: 0;
   background: linear-gradient(90deg, rgba(53, 53, 53, 0) 0%, rgba(53, 53, 53, 0.75) 50%, #353535 75%, #353535 100%);
   z-index: var(--higherLayer);
