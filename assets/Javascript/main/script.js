@@ -74,8 +74,8 @@ function checkAnswer() {
     input.blur();
   }
 
+
   const spans = text.querySelectorAll("span");
-  let needAutoComplete = false;
 
   for (let i = 0; i < spans.length; i++) {
     const inputPhonetics = char2phonetic[inputValue.charAt(i)] || [];
