@@ -7,11 +7,11 @@
     <meta property="og:title" content="MabyType - 臺灣最好看的中文打字練習" />
     <meta property="og:description" content="一個簡單到不用選字的中打網站" />
     <meta name="robots" content="index, follow" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon shortcut" href="favicon.ico" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="icon shortcut" href="assets/image/icons/favicon.ico" />
   </head>
   <body>
-    <img src="icons/wordmarkM.svg" id="wordmark" class="wordmark" />
+    <img src="assets/image/icons/wordmarkM.svg" id="wordmark" class="wordmark" />
     <div class="settingCon" id="settingCon">
       <div class="settingItem" id="timeSetting">
         <h1 class="settingName nst">計時時間</h1>
@@ -44,13 +44,13 @@
     <input type="text" class="mandarinInput nst" id="input" autocomplete="off" />
     <div class="butCon">
       <button class="settingBut fake3d" id="settingBut" onclick="displaySetting()">
-        <img id="settingLogo" src="icons/setting.svg" alt="setting" />
+        <img id="settingLogo" src="assets/image/icons/setting.svg" alt="setting" />
       </button>
       <button class="replayBut fake3d" id="replayBut" onclick="replay()">
-        <img id="replayLogo" src="icons/repeat.svg" alt="replay" />
+        <img id="replayLogo" src="assets/image/icons/repeat.svg" alt="replay" />
       </button>
       <button title="Click Tab to quick start" class="nextBut fake3d" id="nextBut" onclick="next()">
-        <img id="nextLogo" src="icons/next.svg" alt="next" />
+        <img id="nextLogo" src="assets/image/icons/next.svg" alt="next" />
       </button>
     </div>
 
@@ -61,7 +61,7 @@
       <div class="resultItem">
         <h1 title="WPM" class="nst">評級</h1>
         <p id="ratingResult"></p>
-        <img src="icons/Info.svg" title="錯誤率需要低於 10% 才能計算評級並儲存結果" />
+        <img src="assets/image/icons/Info.svg" title="錯誤率需要低於 10% 才能計算評級並儲存結果" />
       </div>
       <div class="resultItem">
         <h1 class="nst">正確</h1>
@@ -97,8 +97,8 @@
     </div>
 
     <div class="loadingScreen" id="loadingScreen">
-      <img src="icons/wordmarkM.svg" alt="" />
-      <img class="spinner" src="icons/spinner.svg" alt="" />
+      <img src="assets/image/icons/wordmarkM.svg" alt="" />
+      <img class="spinner" src="assets/image/icons/spinner.svg" alt="" />
     </div>
 
     <div class="blur blurLeft"></div>
@@ -129,6 +129,6 @@
       </div>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="assets/Javascript/main/script.js"></script>
   </body>
 </html>
