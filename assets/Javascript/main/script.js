@@ -83,7 +83,7 @@ function checkAnswer() {
       spans[i].classList.remove("correct", "incorrect");
       spans[i].classList.add("correct");
 
-      if (isAutoCorrectOn && input.value.charAt(i) !== spans[i].textContent) {
+      if (isAutoCorrectOn && input.value.charAt(i) !== spans[i].textContent && inputValue.charAt(i) !== "，" && inputValue.charAt(i) !== "。") {
         input.value = input.value.substring(0, i) + spans[i].textContent + input.value.substring(i + 1);
       }
     } else if (inputValue.charAt(i) === "") {
