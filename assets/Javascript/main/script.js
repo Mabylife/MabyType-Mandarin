@@ -392,14 +392,14 @@ function displaySetting() {
     input.style.opacity = "1";
     text.style.opacity = "1";
     isSettingOpen = false;
-    document.getElementById("settingBut").querySelector("img").src = "../../image/icons/setting.svg";
+    document.getElementById("settingBut").querySelector("img").src = "assets/image/icons/setting.svg";
     document.getElementById("settingBut").classList.remove("settingOn");
     next();
     document.documentElement.classList.remove("settingOpening");
   } else {
     document.documentElement.classList.add("settingOpening");
     document.getElementById("settingBut").classList.add("settingOn");
-    document.getElementById("settingBut").querySelector("img").src = "../../image/icons/xcircle.svg";
+    document.getElementById("settingBut").querySelector("img").src = "assets/image/icons/xcircle.svg";
     input.blur(); // 失去焦點
     settingCon.classList.add("open");
     input.style.opacity = "0";
