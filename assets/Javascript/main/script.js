@@ -74,7 +74,6 @@ function checkAnswer() {
     input.blur();
   }
 
-
   const spans = text.querySelectorAll("span");
 
   for (let i = 0; i < spans.length; i++) {
