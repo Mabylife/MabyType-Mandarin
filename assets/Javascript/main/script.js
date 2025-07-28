@@ -516,3 +516,8 @@ input.addEventListener("input", () => {
     checkAnswer();
   }, 0);
 });
+
+input.addEventListener("paste", (event) => {
+  event.preventDefault(); // 阻止所有 paste 行為
+  alert("唉呦小調皮，還想貼上");
+});
